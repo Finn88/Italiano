@@ -1,0 +1,5 @@
+<Modules>
+  <Module PersistentId="C14E2325-2A60-4024-86FD-44CF95DBF07D" ModuleId="Model" />
+  <Module PersistentId="AB3BB129-75AE-4357-80B2-68CA24437DAA" ModuleId="OurStudents" />
+  <Module PersistentId="25649F08-3046-4891-ADB8-7EA787B57063" ModuleId="System.Windows.Forms.Calendar" />
+</Modules>

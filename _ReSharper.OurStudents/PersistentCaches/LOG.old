@@ -1,0 +1,5 @@
+2016/05/05-18:22:44.924 cb8 Recovering log #100
+2016/05/05-18:22:44.924 cb8 Level-0 table #102: started
+2016/05/05-18:22:45.004 cb8 Level-0 table #102: 11288 bytes OK
+2016/05/05-18:22:45.084 cb8 Delete type=0 #100
+2016/05/05-18:22:45.084 cb8 Delete type=3 #98

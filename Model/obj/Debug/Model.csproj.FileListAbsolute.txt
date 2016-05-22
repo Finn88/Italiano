@@ -1,0 +1,18 @@
+C:\Users\1\Documents\Visual Studio 2012\Projects\OurStudents\Model\bin\Debug\Model.dll
+C:\Users\1\Documents\Visual Studio 2012\Projects\OurStudents\Model\bin\Debug\Model.pdb
+C:\Users\1\Documents\Visual Studio 2012\Projects\OurStudents\Model\bin\Debug\Equin.ApplicationFramework.BindingListView.dll
+C:\Users\1\Documents\Visual Studio 2012\Projects\OurStudents\Model\obj\Debug\Model.dll
+C:\Users\1\Documents\Visual Studio 2012\Projects\OurStudents\Model\obj\Debug\Model.pdb
+C:\Users\1\Documents\Visual Studio 2012\Projects\OurStudents\Model\obj\Debug\OurStudents.LoadingPanel.resources
+C:\Users\1\Documents\Visual Studio 2012\Projects\OurStudents\Model\obj\Debug\Model.csproj.GenerateResource.Cache
+C:\Users\1\Documents\Visual Studio 2012\Projects\OurStudents\Model\obj\Debug\Model.csprojResolveAssemblyReference.cache
+D:\Projects\Italiano\Model\bin\Debug\Model.dll
+D:\Projects\Italiano\Model\bin\Debug\Model.pdb
+D:\Projects\Italiano\Model\bin\Debug\Equin.ApplicationFramework.BindingListView.dll
+D:\Projects\Italiano\Model\obj\Debug\OurStudents.LoadingPanel.resources
+D:\Projects\Italiano\Model\obj\Debug\Model.csproj.GenerateResource.Cache
+D:\Projects\Italiano\Model\obj\Debug\Model.dll
+D:\Projects\Italiano\Model\obj\Debug\Model.pdb
+D:\Projects\Italiano\Model\bin\Debug\Model.dll.config
+D:\Projects\Italiano\Model\bin\Debug\System.Windows.Forms.Calendar.dll
+D:\Projects\Italiano\Model\obj\Debug\Model.csprojResolveAssemblyReference.cache

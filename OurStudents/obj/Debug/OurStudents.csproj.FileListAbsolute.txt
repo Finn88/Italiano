@@ -1,0 +1,52 @@
+C:\Users\1\Documents\Visual Studio 2012\Projects\OurStudents\OurStudents\bin\Debug\OurStudents.exe.config
+C:\Users\1\Documents\Visual Studio 2012\Projects\OurStudents\OurStudents\bin\Debug\OurStudents.exe
+C:\Users\1\Documents\Visual Studio 2012\Projects\OurStudents\OurStudents\bin\Debug\OurStudents.pdb
+C:\Users\1\Documents\Visual Studio 2012\Projects\OurStudents\OurStudents\bin\Debug\Equin.ApplicationFramework.BindingListView.dll
+C:\Users\1\Documents\Visual Studio 2012\Projects\OurStudents\OurStudents\bin\Debug\MetroFramework.dll
+C:\Users\1\Documents\Visual Studio 2012\Projects\OurStudents\OurStudents\bin\Debug\Model.dll
+C:\Users\1\Documents\Visual Studio 2012\Projects\OurStudents\OurStudents\bin\Debug\Model.pdb
+C:\Users\1\Documents\Visual Studio 2012\Projects\OurStudents\OurStudents\obj\Debug\OurStudents.csprojResolveAssemblyReference.cache
+C:\Users\1\Documents\Visual Studio 2012\Projects\OurStudents\OurStudents\obj\Debug\OurStudents.GroupsEditForm.resources
+C:\Users\1\Documents\Visual Studio 2012\Projects\OurStudents\OurStudents\obj\Debug\OurStudents.MainForm.resources
+C:\Users\1\Documents\Visual Studio 2012\Projects\OurStudents\OurStudents\obj\Debug\OurStudents.PaymentsEditForm.resources
+C:\Users\1\Documents\Visual Studio 2012\Projects\OurStudents\OurStudents\obj\Debug\OurStudents.Properties.Resources.resources
+C:\Users\1\Documents\Visual Studio 2012\Projects\OurStudents\OurStudents\obj\Debug\OurStudents.PersonsEditGridForm.resources
+C:\Users\1\Documents\Visual Studio 2012\Projects\OurStudents\OurStudents\obj\Debug\OurStudents.csproj.GenerateResource.Cache
+C:\Users\1\Documents\Visual Studio 2012\Projects\OurStudents\OurStudents\obj\Debug\OurStudents.exe
+C:\Users\1\Documents\Visual Studio 2012\Projects\OurStudents\OurStudents\obj\Debug\OurStudents.pdb
+C:\Users\1\Documents\Visual Studio 2012\Projects\OurStudents\OurStudents\bin\Debug\Common.Logging.Core.dll
+C:\Users\1\Documents\Visual Studio 2012\Projects\OurStudents\OurStudents\bin\Debug\Common.Logging.dll
+C:\Users\1\Documents\Visual Studio 2012\Projects\OurStudents\OurStudents\bin\Debug\Common.Logging.pdb
+C:\Users\1\Documents\Visual Studio 2012\Projects\OurStudents\OurStudents\bin\Debug\Common.Logging.xml
+C:\Users\1\Documents\Visual Studio 2012\Projects\OurStudents\OurStudents\bin\Debug\Common.Logging.Core.pdb
+C:\Users\1\Documents\Visual Studio 2012\Projects\OurStudents\OurStudents\bin\Debug\Common.Logging.Core.xml
+C:\Users\1\Documents\Visual Studio 2012\Projects\OurStudents\OurStudents\obj\Debug\OurStudents.Scheduler.resources
+C:\Users\1\Documents\Visual Studio 2012\Projects\OurStudents\OurStudents\bin\Debug\System.Windows.Forms.Calendar.dll
+C:\Users\1\Documents\Visual Studio 2012\Projects\OurStudents\OurStudents\bin\Debug\System.Windows.Forms.Calendar.pdb
+C:\Users\1\Documents\Visual Studio 2012\Projects\OurStudents\OurStudents\obj\Debug\OurStudents.EventForm.resources
+D:\Projects\Italiano\OurStudents\bin\Debug\OurStudents.exe.config
+D:\Projects\Italiano\OurStudents\obj\Debug\OurStudents.exe
+D:\Projects\Italiano\OurStudents\obj\Debug\OurStudents.pdb
+D:\Projects\Italiano\OurStudents\bin\Debug\OurStudents.exe
+D:\Projects\Italiano\OurStudents\bin\Debug\OurStudents.pdb
+D:\Projects\Italiano\OurStudents\bin\Debug\Common.Logging.Core.dll
+D:\Projects\Italiano\OurStudents\bin\Debug\Common.Logging.dll
+D:\Projects\Italiano\OurStudents\bin\Debug\Equin.ApplicationFramework.BindingListView.dll
+D:\Projects\Italiano\OurStudents\bin\Debug\MetroFramework.dll
+D:\Projects\Italiano\OurStudents\bin\Debug\Model.dll
+D:\Projects\Italiano\OurStudents\bin\Debug\Model.pdb
+D:\Projects\Italiano\OurStudents\bin\Debug\Common.Logging.pdb
+D:\Projects\Italiano\OurStudents\bin\Debug\Common.Logging.xml
+D:\Projects\Italiano\OurStudents\bin\Debug\Common.Logging.Core.pdb
+D:\Projects\Italiano\OurStudents\bin\Debug\Common.Logging.Core.xml
+D:\Projects\Italiano\OurStudents\obj\Debug\OurStudents.csprojResolveAssemblyReference.cache
+D:\Projects\Italiano\OurStudents\obj\Debug\OurStudents.EventForm.resources
+D:\Projects\Italiano\OurStudents\obj\Debug\OurStudents.Scheduler.resources
+D:\Projects\Italiano\OurStudents\obj\Debug\OurStudents.GroupsEditForm.resources
+D:\Projects\Italiano\OurStudents\obj\Debug\OurStudents.MainForm.resources
+D:\Projects\Italiano\OurStudents\obj\Debug\OurStudents.PaymentsEditForm.resources
+D:\Projects\Italiano\OurStudents\obj\Debug\OurStudents.Properties.Resources.resources
+D:\Projects\Italiano\OurStudents\obj\Debug\OurStudents.PersonsEditGridForm.resources
+D:\Projects\Italiano\OurStudents\obj\Debug\OurStudents.csproj.GenerateResource.Cache
+D:\Projects\Italiano\OurStudents\obj\Debug\OurStudents.Search.resources
+D:\Projects\Italiano\OurStudents\bin\Debug\System.Windows.Forms.dll
