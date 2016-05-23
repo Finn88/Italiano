@@ -4,8 +4,6 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
-using System.Windows.Forms.Calendar;
-using System.Xml;
 using Model.Tables;
 using Equin.ApplicationFramework;
 using System.Xml.Serialization;
@@ -140,7 +138,7 @@ namespace Model
                     select new PaymentEntity
                            {
                                Id = p.Id,
-                               PersonId = p.Id,
+                               PersonId = p.PersonId,
                                Costs = p.Costs,
                                DateFromString = p.DateFromString,
                                DateToString = p.DateToString,
@@ -154,7 +152,7 @@ namespace Model
                 select new PaymentEntity
                        {
                            Id = p.Id,
-                           PersonId = p.Id,
+                           PersonId = p.PersonId,
                            Costs = p.Costs,
                            DateFromString = p.DateFromString,
                            DateToString = p.DateToString,
