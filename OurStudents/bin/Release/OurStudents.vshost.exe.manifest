@@ -77,26 +77,26 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Model.dll" size="80896">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Model.dll" size="92160">
       <assemblyIdentity name="Model" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>rd48su9pLLyOeHafOdO4FQ59dG4=</dsig:DigestValue>
+        <dsig:DigestValue>ZOEnVYEbFKnncr6/O6+oKbb+3rI=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="OurStudents.exe" size="275456">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="OurStudents.exe" size="308224">
       <assemblyIdentity name="OurStudents" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>/RzBhYT7ZX52FkMzQyL3Jc5gtP8=</dsig:DigestValue>
+        <dsig:DigestValue>yrvdG8T+A2PuUZm4N7bCqIv5ItQ=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

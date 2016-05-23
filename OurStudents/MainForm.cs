@@ -234,17 +234,269 @@ namespace OurStudents
 
         private void EarningsMenuClick(object sender, EventArgs e)
         {
-
+            LoadBudgetGrid(sender, true);
         }
 
         private void ExpensesMenuClick(object sender, EventArgs e)
         {
+            LoadBudgetGrid(sender, false);
+        }
 
+        private void LoadBudgetGrid(object sender, bool isEarning)
+        {
+            _budgetGrid = new BudgetGrid(Db, isEarning)
+            {
+                MaximumSize = new Size(_tabMainPlaceholder.Width - 50, _tabMainPlaceholder.Height - 250),
+                EditForm = new BudgetEditFrom { AppSettings = AppSettings },
+                MainTabControl = _tabControl,
+                MainPlaceholder = _tabMainPlaceholder,
+                SecondaryPlaceholder = _tabSecondaryPlaceholder
+            };
+
+            SelectButton(sender);
+            HideSecondaryTab();
+            _tabMainPlaceholder.Text = isEarning ? "Доходы" : "Расходы";
+
+            var startMonth = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1);
+            var endMonth = startMonth.AddMonths(1).AddDays(-1);
+
+            var backgroundLoader = new BackgroundWorker();
+            backgroundLoader.DoWork += (s, arg) =>
+            {
+                this.Invoke((MethodInvoker)(() =>
+                {
+                    _spinnerPanel = new LoadingPanel();
+                    _spinnerPanel.UpdateLoadingText("Загружаеются данные...");
+                    _spinnerPanel.Show();
+                }));
+
+                _budgetGrid.Top = 0;
+                _budgetGrid.Width = (_tabMainPlaceholder.Width / 2);
+                _budgetGrid.Height = _tabMainPlaceholder.Height - 150;
+
+                this.Invoke((MethodInvoker)(() =>
+                {
+
+                    var datesPanel = new MetroPanel
+                    {
+                        Name = "pnDates",
+                        Width = 500,
+                        Height = 300,
+                        Top = 0,
+                        Left = (_tabMainPlaceholder.Width / 2) + 50,
+                    };
+                    var dateFrom = new DateTimePicker
+                    {
+                        Name = "dtFrom",
+                        Value = startMonth,
+                        Top = 20,
+                        Left = 150,
+                        Width = 150
+                    };
+
+                    var dateTo = new DateTimePicker
+                    {
+                        Name = "dtFrom",
+                        Value = endMonth,
+                        Top = 60,
+                        Left = 150,
+                        Width = 150
+                    };
+
+
+                    datesPanel.Controls.Add(new MetroLabel
+                    {
+                        Text = "Период От:",
+                        Top = 20,
+                        Left = 30,
+                        Width = 100
+                    });
+                    datesPanel.Controls.Add(dateFrom);
+
+                    datesPanel.Controls.Add(new MetroLabel
+                    {
+                        Text = "Период До:",
+                        Top = 60,
+                        Left = 30,
+                        Width = 100
+                    });
+                    datesPanel.Controls.Add(dateTo);
+
+                    _budgetGrid.RefreshGrid();
+
+                    datesPanel.Controls.Add(new MetroLabel
+                    {
+                        Text = "Общая сумма:",
+                        Top = 100,
+                        Left = 30,
+                        Width = 200,
+                    });
+
+                    var total = new MetroLabel
+                    {
+                        Name = "lbTotal",
+                        Text = _budgetGrid.Total + " грн.",
+                        Top = 100,
+                        Left = 240,
+                        Width = 100,
+                    };
+
+                    datesPanel.Controls.Add(total);
+
+                    dateTo.ValueChanged += (send, args) =>
+                    {
+                        _budgetGrid.DateTo = dateTo.Value;
+                        _budgetGrid.RefreshGrid();
+                        total.Text = _budgetGrid.Total + " грн.";
+                    };
+                    dateFrom.ValueChanged += (send, args) =>
+                    {
+                        _budgetGrid.DateFrom = dateFrom.Value;
+                        _budgetGrid.RefreshGrid();
+                        total.Text = _budgetGrid.Total + " грн.";
+                    };
+
+                    _tabMainPlaceholder.Controls.Clear();
+                    _tabMainPlaceholder.Controls.Add(datesPanel);
+                    _tabMainPlaceholder.Controls.Add(_budgetGrid);
+                    _currentGrid = _budgetGrid;
+                    _currentGrid.Select();
+                }));
+            };
+            backgroundLoader.RunWorkerCompleted += (s, arg) => this.Invoke(new Action(() =>
+            {
+                _spinnerPanel.Close();
+                this.Activate();
+            }));
+            backgroundLoader.RunWorkerAsync();
         }
 
         private void PaymentReportMenuClick(object sender, EventArgs e)
         {
+            _reportGrid = new PaymentsReportGrid(Db)
+            {
+                MaximumSize = new Size(_tabMainPlaceholder.Width - 50, _tabMainPlaceholder.Height - 250),
+                MainTabControl = _tabControl,
+                MainPlaceholder = _tabMainPlaceholder,
+                SecondaryPlaceholder = _tabSecondaryPlaceholder
+            };
 
+            SelectButton(sender);
+            HideSecondaryTab();
+            _tabMainPlaceholder.Text = "Отчет";
+
+            var startMonth = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1);
+            var endMonth = startMonth.AddMonths(1).AddDays(-1);
+
+            var backgroundLoader = new BackgroundWorker();
+            backgroundLoader.DoWork += (s, arg) =>
+            {
+                this.Invoke((MethodInvoker)(() =>
+                {
+                    _spinnerPanel = new LoadingPanel();
+                    _spinnerPanel.UpdateLoadingText("Загружаеются данные...");
+                    _spinnerPanel.Show();
+                }));
+
+                _reportGrid.Top = 0;
+                _reportGrid.Width = (_tabMainPlaceholder.Width / 2)+250;
+                _reportGrid.Height = _tabMainPlaceholder.Height - 150;
+
+                this.Invoke((MethodInvoker)(() =>
+                {
+
+                    var datesPanel = new MetroPanel
+                    {
+                        Name = "pnDates",
+                        Width = 500,
+                        Height = 300,
+                        Top = 0,
+                        Left = (_tabMainPlaceholder.Width / 2) + 300,
+                    };
+                    var dateFrom = new DateTimePicker
+                    {
+                        Name = "dtFrom",
+                        Value = startMonth,
+                        Top = 20,
+                        Left = 150,
+                        Width = 150
+                    };
+
+                    var dateTo = new DateTimePicker
+                    {
+                        Name = "dtFrom",
+                        Value = endMonth,
+                        Top = 60,
+                        Left = 150,
+                        Width = 150
+                    };
+
+
+                    datesPanel.Controls.Add(new MetroLabel
+                    {
+                        Text = "Период От:",
+                        Top = 20,
+                        Left = 30,
+                        Width = 100
+                    });
+                    datesPanel.Controls.Add(dateFrom);
+
+                    datesPanel.Controls.Add(new MetroLabel
+                    {
+                        Text = "Период До:",
+                        Top = 60,
+                        Left = 30,
+                        Width = 100
+                    });
+                    datesPanel.Controls.Add(dateTo);
+
+                    _reportGrid.RefreshGrid();
+
+                    datesPanel.Controls.Add(new MetroLabel
+                    {
+                        Text = "Общая сумма:",
+                        Top = 100,
+                        Left = 30,
+                        Width = 200,
+                    });
+
+                    var total = new MetroLabel
+                    {
+                        Name = "lbTotal",
+                        Text = _reportGrid.Total + " грн.",
+                        Top = 100,
+                        Left = 240,
+                        Width = 100,
+                    };
+
+                    datesPanel.Controls.Add(total);
+
+                    dateTo.ValueChanged += (send, args) =>
+                    {
+                        _reportGrid.DateTo = dateTo.Value;
+                        _reportGrid.RefreshGrid();
+                        total.Text = _reportGrid.Total + " грн.";
+                    };
+                    dateFrom.ValueChanged += (send, args) =>
+                    {
+                        _reportGrid.DateFrom = dateFrom.Value;
+                        _reportGrid.RefreshGrid();
+                        total.Text = _reportGrid.Total + " грн.";
+                    };
+
+                    _tabMainPlaceholder.Controls.Clear();
+                    _tabMainPlaceholder.Controls.Add(datesPanel);
+                    _tabMainPlaceholder.Controls.Add(_reportGrid);
+                    _currentGrid = _reportGrid;
+                    _currentGrid.Select();
+                }));
+            };
+            backgroundLoader.RunWorkerCompleted += (s, arg) => this.Invoke(new Action(() =>
+            {
+                _spinnerPanel.Close();
+                this.Activate();
+            }));
+            backgroundLoader.RunWorkerAsync();
         }
 
         #endregion
@@ -592,6 +844,7 @@ namespace OurStudents
             lbGrids.Items.Add(new Tuple<int, string>(DataBase.GridsIds.PaymentsGridId, "Платежи"));
             lbGrids.Items.Add(new Tuple<int, string>(DataBase.GridsIds.EarningsGridId, "Доходы"));
             lbGrids.Items.Add(new Tuple<int, string>(DataBase.GridsIds.ExpensesGridId, "Расходы"));
+            lbGrids.Items.Add(new Tuple<int, string>(DataBase.GridsIds.PaymentsReportGridId, "Отет"));
             lbGrids.Items.Add(new Tuple<int, string>(DataBase.GridsIds.GroupsGridId, "Группы"));
             lbGrids.Items.Add(new Tuple<int, string>(DataBase.GridsIds.PrivateGridId, "Индивидуальные"));
             lbGrids.Items.Add(new Tuple<int, string>(DataBase.GridsIds.MasterGridId, "Мастер-классы"));

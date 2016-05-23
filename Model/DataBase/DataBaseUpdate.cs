@@ -60,12 +60,17 @@ namespace Model
             {
                 get { return 90; }
             }
+            public static int PaymentsReportGridId
+            {
+                get { return 100; }
+            }
         }
 
         public void UpdateDB()
         {
             UpdateDB1();
             UpdateDB2();
+            UpdateDB3();
         }
 
         private void UpdateDB1()
@@ -268,5 +273,94 @@ namespace Model
 
             SubmitChanges();
         }
+
+
+        private void UpdateDB3()
+        {
+            if (GridsSettings.Any(c => c.GridId == GridsIds.PaymentsReportGridId)) return;
+
+            var flag = 0;
+            GridsSettings.Add(new GridsSettings
+                              {
+                                  GridId = GridsIds.PaymentsReportGridId,
+                                  ColumnHeader = "Дата",
+                                  ColumnName = "PaymentDate",
+                                  IsVisible = false,
+                                  OrderNr = flag,
+                                  Width = 100
+                              });
+            flag++;
+            GridsSettings.Add(new GridsSettings
+                              {
+                                  GridId = GridsIds.PaymentsReportGridId,
+                                  ColumnHeader = "Платежи",
+                                  ColumnName = "Costs",
+                                  IsVisible = false,
+                                  OrderNr = flag,
+                                  Width = 100
+                              });
+            flag++;
+            GridsSettings.Add(new GridsSettings
+                              {
+                                  GridId = GridsIds.PaymentsReportGridId,
+                                  ColumnHeader = "Источник платежей",
+                                  ColumnName = "CostsComments",
+                                  IsVisible = false,
+                                  OrderNr = flag,
+                                  Width = 100
+                              });
+            flag++;
+            GridsSettings.Add(new GridsSettings
+                              {
+                                  GridId = GridsIds.PaymentsReportGridId,
+                                  ColumnHeader = "Доходы",
+                                  ColumnName = "Earnings",
+                                  IsVisible = false,
+                                  OrderNr = flag,
+                                  Width = 100
+                              });
+            flag++;
+            GridsSettings.Add(new GridsSettings
+                              {
+                                  GridId = GridsIds.PaymentsReportGridId,
+                                  ColumnHeader = "Истоник доходов",
+                                  ColumnName = "EarningsComments",
+                                  IsVisible = false,
+                                  OrderNr = flag,
+                                  Width = 100
+                              });
+            flag++;
+            GridsSettings.Add(new GridsSettings
+                              {
+                                  GridId = GridsIds.PaymentsReportGridId,
+                                  ColumnHeader = "Расходы",
+                                  ColumnName = "Expenses",
+                                  IsVisible = false,
+                                  OrderNr = flag,
+                                  Width = 100
+                              });
+            flag++;
+            GridsSettings.Add(new GridsSettings
+                              {
+                                  GridId = GridsIds.PaymentsReportGridId,
+                                  ColumnHeader = "Цель расходов",
+                                  ColumnName = "ExpensesComments",
+                                  IsVisible = false,
+                                  OrderNr = flag,
+                                  Width = 100
+                              });
+            flag++;
+            GridsSettings.Add(new GridsSettings
+                              {
+                                  GridId = GridsIds.PaymentsReportGridId,
+                                  ColumnHeader = "Сумма за день",
+                                  ColumnName = "TotalPerDate",
+                                  IsVisible = false,
+                                  OrderNr = flag,
+                                  Width = 100
+                              });
+            SubmitChanges();
+        }
+
     }
 }

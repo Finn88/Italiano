@@ -80,10 +80,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AppSettings.cs" />
-    <Compile Include="DataBaseUpdate.cs" />
-    <Compile Include="DataBase.cs" />
-    <Compile Include="Extentions.cs" />
+    <Compile Include="DataBase\Sources.cs" />
+    <Compile Include="DataBase\Entities.cs" />
+    <Compile Include="Grids\PaymentsReportGrid.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Helpers\AppSettings.cs" />
+    <Compile Include="DataBase\DataBaseUpdate.cs" />
+    <Compile Include="DataBase\DataBase.cs" />
+    <Compile Include="Helpers\Extentions.cs" />
+    <Compile Include="Grids\BudgetGrid.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Grids\EventsGrid.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -158,9 +166,6 @@
       <ProductName>Windows Installer 4.5</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

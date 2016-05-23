@@ -7,18 +7,20 @@ using MetroFramework.Controls;
 
 namespace Model.Grids
 {
-    public class PaymentsGrid : Grid<PaymentEntity>
+    public class BudgetGrid : Grid<BudgetEntity>
     {
         public decimal Total = 0;
         public DateTime? DateFrom;
         public DateTime? DateTo;
+        public bool IsEarning;
 
-        public PaymentsGrid(DataBase db) : base(db)
+        public BudgetGrid(DataBase db, bool isEarning) : base(db)
         {
-            Name = "studentsGrid";
+            Name = "budgetGrid";
             RefreshGrid();
-            GridId = DataBase.GridsIds.PaymentsGridId;
-            var columns = Db.GetColumnsSettingsList(DataBase.GridsIds.PaymentsGridId).OrderBy(c => c.OrderNr);
+            IsEarning = isEarning;
+            GridId = isEarning ? DataBase.GridsIds.EarningsGridId : DataBase.GridsIds.ExpensesGridId;
+            var columns = Db.GetColumnsSettingsList(GridId).OrderBy(c => c.OrderNr);
             foreach (var column in columns)
             {
                 Columns.Add(new CustomColumn
@@ -33,23 +35,15 @@ namespace Model.Grids
             }
         }
 
-        protected override void AdditionalMenuItems(bool isRowSelected, string id)
-        {
-            Menu.MenuItems[0].Visible = IsDetailsGrid;
-        }
-
         protected override void UpdateClick(object sender, EventArgs e, string id)
         {
-            var payment = Db.Payments.FirstOrDefault(c => c.Id == id);
+            var payment = Db.Budget.FirstOrDefault(c => c.Id == id);
 
             var dialog = EditForm;
             dialog.EditId = id;
             dialog.EditGrid = this;
             dialog.DetailsId = DetailsId;
-
-            (dialog.Controls["gbPaymentDates"].Controls["dtPaymentsStartDate"] as DateTimePicker).Value =
-                payment.DateFrom;
-            (dialog.Controls["gbPaymentDates"].Controls["dtPaymentsEndDate"] as DateTimePicker).Value = payment.DateTo;
+            
             (dialog.Controls["dtPaymentDate"] as DateTimePicker).Value = payment.PaymentDate;
             (dialog.Controls["tbPaymentsComments"] as TextBox).Text = payment.Comments;
             (dialog.Controls["tbCosts"] as TextBox).Text = payment.Costs.ToString("#.00");
@@ -61,17 +55,17 @@ namespace Model.Grids
         {
             if (id != null)
             {
-                var payment = Db.Payments.FirstOrDefault(c => c.Id == id);
+                var payment = Db.Budget.FirstOrDefault(c => c.Id == id);
                 if (payment != null)
                 {
-                    Db.Payments.Remove(payment);
+                    Db.Budget.Remove(payment);
                     Db.SubmitChanges();
                     RefreshGrid();
                 }
             }
         }
 
-        protected override BindingListView<PaymentEntity> GetDataSource()
+        protected override BindingListView<BudgetEntity> GetDataSource()
         {
             var startMonth = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1);
             var endMonth = startMonth.AddMonths(1).AddDays(-1);
@@ -80,12 +74,12 @@ namespace Model.Grids
             if (DateTo == null)
                 DateTo = endMonth;
 
-            return Db.GetPaymentsList(IsDetailsGrid, DetailsId, DateFrom.Value, DateTo.Value);
+            return Db.GetBudgetList(IsEarning, DateFrom.Value, DateTo.Value);
         }
 
-        private BindingListView<PaymentEntity> GetDataSource(DateTime datefrom, DateTime dateto)
+        private BindingListView<BudgetEntity> GetDataSource(DateTime datefrom, DateTime dateto)
         {
-            return Db.GetPaymentsList(IsDetailsGrid, DetailsId, datefrom, dateto);
+            return Db.GetBudgetList(IsEarning, datefrom, dateto);
         }
 
         public override void RefreshGrid()
@@ -103,7 +97,7 @@ namespace Model.Grids
             Update();
             Refresh();
             if (SecondaryPlaceholder!=null && SecondaryPlaceholder.Controls.Count > 0)
-                (SecondaryPlaceholder.Controls["pnDates"].Controls["lbTotal"] as MetroLabel).Text = Total.ToString() + " грн.";
+                (SecondaryPlaceholder.Controls["pnDates"].Controls["lbTotal"] as MetroLabel).Text = Total + " грн.";
         }
     }
 }

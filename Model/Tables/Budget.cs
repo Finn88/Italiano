@@ -15,10 +15,6 @@ namespace Model.Tables
         public string Id { get; set; }
 
         [XmlElement]
-        [DataBase.CoulmnId("Id плательщика")]
-        public string PersonId { get; set; }
-
-        [XmlElement]
         [DataBase.CoulmnId("Сумма")]
         public Decimal Costs { get; set; }
 

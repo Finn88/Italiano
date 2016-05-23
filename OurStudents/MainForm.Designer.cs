@@ -426,6 +426,9 @@ namespace OurStudents
         private static EventsGrid _masterEventGrid;
         private static EventsGrid _eventGrid;
 
+        private static BudgetGrid _budgetGrid;
+        private static PaymentsReportGrid _reportGrid;
+
         private BackgroundWorker _backgroundWorker;
         private RibbonPanel TablesSettings;
         private RibbonButton btnGrids;

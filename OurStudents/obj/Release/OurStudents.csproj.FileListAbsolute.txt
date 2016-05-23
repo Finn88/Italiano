@@ -28,3 +28,4 @@ D:\Projects\Italiano\OurStudents\obj\Release\OurStudents.exe.manifest
 D:\Projects\Italiano\OurStudents\obj\Release\OurStudents.application
 D:\Projects\Italiano\OurStudents\obj\Release\OurStudents.exe
 D:\Projects\Italiano\OurStudents\obj\Release\OurStudents.pdb
+D:\Projects\Italiano\OurStudents\obj\Release\OurStudents.BudgetEditFrom.resources
