@@ -1,4 +1,0 @@
-D:\Projects\Italiano\System.Windows.Forms.Calendar\System.Windows.Forms.Calendar\bin\Release\System.Windows.Forms.Calendar.dll
-D:\Projects\Italiano\System.Windows.Forms.Calendar\System.Windows.Forms.Calendar\bin\Release\System.Windows.Forms.Calendar.pdb
-D:\Projects\Italiano\System.Windows.Forms.Calendar\System.Windows.Forms.Calendar\obj\Release\System.Windows.Forms.Calendar.dll
-D:\Projects\Italiano\System.Windows.Forms.Calendar\System.Windows.Forms.Calendar\obj\Release\System.Windows.Forms.Calendar.pdb
