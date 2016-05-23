@@ -46,3 +46,14 @@ Network Trash Folder
 Temporary Items
 .apdisk
 OurStudents/bin/Release/DB/ItalianoDB.xml
+Model/bin/Release/Model.pdb
+Model/obj/Release/Model.csproj.FileListAbsolute.txt
+Model/obj/Release/Model.csproj.GenerateResource.Cache
+Model/obj/Release/Model.dll
+*.cache
+Model/obj/Release/OurStudents.LoadingPanel.resources
+OurStudents/bin/Release/OurStudents.exe.manifest
+OurStudents/bin/Release/OurStudents.exe.manifest
+OurStudents/obj/Release/OurStudents.application
+OurStudents/obj/Release/OurStudents.exe.manifest
+OurStudents/obj/Release/OurStudents.PersonsEditGridForm.resources
