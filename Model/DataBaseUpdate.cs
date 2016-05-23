@@ -52,9 +52,23 @@ namespace Model
             {
                 get { return 70; }
             }
+            public static int EarningsGridId
+            {
+                get { return 80; }
+            }
+            public static int ExpensesGridId
+            {
+                get { return 90; }
+            }
         }
 
         public void UpdateDB()
+        {
+            UpdateDB1();
+            UpdateDB2();
+        }
+
+        private void UpdateDB1()
         {
             if (GridsSettings.Any(c => c.GridId == 1)) return;
 
@@ -223,5 +237,36 @@ namespace Model
             SubmitChanges();
         }
 
+        private void UpdateDB2()
+        {
+            if(GridsSettings.Any(c=>c.GridId == GridsIds.EarningsGridId)) return;
+            
+            var flag = 0;
+            foreach (var propertyInfo in typeof(Budget).GetProperties().Where(c => Attribute.IsDefined(c, typeof(CoulmnId))))
+            {
+                var attribute = (CoulmnId)propertyInfo.GetCustomAttributes(typeof(CoulmnId), false).First();
+                GridsSettings.Add(new GridsSettings
+                {
+                    GridId = GridsIds.EarningsGridId,
+                    ColumnHeader = attribute.Text,
+                    ColumnName = propertyInfo.Name,
+                    IsVisible = false,
+                    OrderNr = flag,
+                    Width = 100
+                });
+                GridsSettings.Add(new GridsSettings
+                {
+                    GridId = GridsIds.ExpensesGridId,
+                    ColumnHeader = attribute.Text,
+                    ColumnName = propertyInfo.Name,
+                    IsVisible = false,
+                    OrderNr = flag,
+                    Width = 100
+                });
+                flag++;
+            }
+
+            SubmitChanges();
+        }
     }
 }

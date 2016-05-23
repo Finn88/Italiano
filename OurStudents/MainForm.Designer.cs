@@ -69,6 +69,12 @@ namespace OurStudents
             this.TablesSettings = new System.Windows.Forms.RibbonPanel();
             this.btnGrids = new System.Windows.Forms.RibbonButton();
             this._backgroundWorker = new System.ComponentModel.BackgroundWorker();
+            this.ribbonPanel11 = new System.Windows.Forms.RibbonPanel();
+            this.btnEarnings = new System.Windows.Forms.RibbonButton();
+            this.ribbonPanel12 = new System.Windows.Forms.RibbonPanel();
+            this.btnExpenses = new System.Windows.Forms.RibbonButton();
+            this.ribbonPanel13 = new System.Windows.Forms.RibbonPanel();
+            this.btnPaymentReport = new System.Windows.Forms.RibbonButton();
             this.SuspendLayout();
             // 
             // ribbonTabStudents
@@ -229,6 +235,9 @@ namespace OurStudents
             // tabMoney
             // 
             this.tabMoney.Panels.Add(this.ribbonPanel7);
+            this.tabMoney.Panels.Add(this.ribbonPanel11);
+            this.tabMoney.Panels.Add(this.ribbonPanel12);
+            this.tabMoney.Panels.Add(this.ribbonPanel13);
             this.tabMoney.Text = "Финансы";
             this.tabMoney.ActiveChanged += new System.EventHandler(this.MoneyActivate);
             // 
@@ -250,7 +259,6 @@ namespace OurStudents
             // 
             this.tabScheduler.Panels.Add(this.ribbonPanel3);
             this.tabScheduler.Text = "Расписание";
-           // this.tabScheduler.Visible = false;
             this.tabScheduler.ActiveChanged += new System.EventHandler(this.ShedulerActivate);
             // 
             // ribbonPanel3
@@ -297,8 +305,8 @@ namespace OurStudents
             // 
             this.btnDB.Image = global::OurStudents.Properties.Resources._1455906863_database_px_png;
             this.btnDB.SmallImage = ((System.Drawing.Image)(resources.GetObject("btnDB.SmallImage")));
-            this.btnDB.Click += DBSettingsClick;
             this.btnDB.Text = "";
+            this.btnDB.Click += new System.EventHandler(this.DBSettingsClick);
             // 
             // TablesSettings
             // 
@@ -313,6 +321,48 @@ namespace OurStudents
             this.btnGrids.SmallImage = ((System.Drawing.Image)(resources.GetObject("btnGrids.SmallImage")));
             this.btnGrids.Text = "";
             this.btnGrids.Click += new System.EventHandler(this.GridsClick);
+            // 
+            // ribbonPanel11
+            // 
+            this.ribbonPanel11.ButtonMoreEnabled = false;
+            this.ribbonPanel11.ButtonMoreVisible = false;
+            this.ribbonPanel11.Items.Add(this.btnEarnings);
+            this.ribbonPanel11.Text = "Доходы";
+            // 
+            // btnEarnings
+            // 
+            this.btnEarnings.Image = ((System.Drawing.Image)(resources.GetObject("btnEarnings.Image")));
+            this.btnEarnings.SmallImage = ((System.Drawing.Image)(resources.GetObject("btnEarnings.SmallImage")));
+            this.btnEarnings.Text = "";
+            this.btnEarnings.Click += new System.EventHandler(this.EarningsMenuClick);
+            // 
+            // ribbonPanel12
+            // 
+            this.ribbonPanel12.ButtonMoreEnabled = false;
+            this.ribbonPanel12.ButtonMoreVisible = false;
+            this.ribbonPanel12.Items.Add(this.btnExpenses);
+            this.ribbonPanel12.Text = "Расходы";
+            // 
+            // btnExpenses
+            // 
+            this.btnExpenses.Image = ((System.Drawing.Image)(resources.GetObject("btnExpenses.Image")));
+            this.btnExpenses.SmallImage = ((System.Drawing.Image)(resources.GetObject("btnExpenses.SmallImage")));
+            this.btnExpenses.Text = "";
+            this.btnExpenses.Click += new System.EventHandler(this.ExpensesMenuClick);
+            // 
+            // ribbonPanel13
+            // 
+            this.ribbonPanel13.ButtonMoreEnabled = false;
+            this.ribbonPanel13.ButtonMoreVisible = false;
+            this.ribbonPanel13.Items.Add(this.btnPaymentReport);
+            this.ribbonPanel13.Text = "Отчет";
+            // 
+            // btnPaymentReport
+            // 
+            this.btnPaymentReport.Image = ((System.Drawing.Image)(resources.GetObject("btnPaymentReport.Image")));
+            this.btnPaymentReport.SmallImage = ((System.Drawing.Image)(resources.GetObject("btnPaymentReport.SmallImage")));
+            this.btnPaymentReport.Text = "";
+            this.btnPaymentReport.Click += new System.EventHandler(this.PaymentReportMenuClick);
             // 
             // MainForm
             // 
@@ -379,6 +429,12 @@ namespace OurStudents
         private BackgroundWorker _backgroundWorker;
         private RibbonPanel TablesSettings;
         private RibbonButton btnGrids;
+        private RibbonPanel ribbonPanel11;
+        private RibbonButton btnEarnings;
+        private RibbonPanel ribbonPanel12;
+        private RibbonButton btnExpenses;
+        private RibbonPanel ribbonPanel13;
+        private RibbonButton btnPaymentReport;
 
     }
 }

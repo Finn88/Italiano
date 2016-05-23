@@ -21,6 +21,7 @@ namespace Model
         [XmlArray] [XmlArrayItem("EventsParticipants")] public List<EventsParticipants> EventsParticipants;
         [XmlArray] [XmlArrayItem("Settings")] public List<Settings> Settings;
         [XmlArray] [XmlArrayItem("GridsSettings")] public List<GridsSettings> GridsSettings;
+        [XmlArray] [XmlArrayItem("Budget")] public List<Budget> Budget;
     }
 
     public partial class DataBase
@@ -64,6 +65,12 @@ namespace Model
         {
             get { return Entities.GridsSettings; }
         }
+
+        public List<Budget> Budget
+        {
+            get { return Entities.Budget; }
+        }
+        
 
         private readonly string _connectionString;
         private readonly XmlSerializer _serializer;

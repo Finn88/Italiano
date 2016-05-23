@@ -114,6 +114,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="Tables\Budget.cs" />
     <Compile Include="Tables\GridsSettings.cs" />
     <Compile Include="Tables\Settings.cs" />
     <Compile Include="Tables\EventsParticipants.cs" />

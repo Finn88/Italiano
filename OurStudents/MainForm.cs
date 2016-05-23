@@ -232,6 +232,21 @@ namespace OurStudents
             backgroundLoader.RunWorkerAsync();
         }
 
+        private void EarningsMenuClick(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ExpensesMenuClick(object sender, EventArgs e)
+        {
+
+        }
+
+        private void PaymentReportMenuClick(object sender, EventArgs e)
+        {
+
+        }
+
         #endregion
 
         #region Persons
@@ -575,10 +590,13 @@ namespace OurStudents
             lbGrids.Items.Add(new Tuple<int, string>(DataBase.GridsIds.TeachersGridId, "Преподаватели"));
             lbGrids.Items.Add(new Tuple<int, string>(DataBase.GridsIds.ContactsGridId, "Контакты"));
             lbGrids.Items.Add(new Tuple<int, string>(DataBase.GridsIds.PaymentsGridId, "Платежи"));
+            lbGrids.Items.Add(new Tuple<int, string>(DataBase.GridsIds.EarningsGridId, "Доходы"));
+            lbGrids.Items.Add(new Tuple<int, string>(DataBase.GridsIds.ExpensesGridId, "Расходы"));
             lbGrids.Items.Add(new Tuple<int, string>(DataBase.GridsIds.GroupsGridId, "Группы"));
             lbGrids.Items.Add(new Tuple<int, string>(DataBase.GridsIds.PrivateGridId, "Индивидуальные"));
             lbGrids.Items.Add(new Tuple<int, string>(DataBase.GridsIds.MasterGridId, "Мастер-классы"));
             lbGrids.Items.Add(new Tuple<int, string>(DataBase.GridsIds.EventsGridId, "События"));
+
             lbGrids.SelectedIndex = 0;
             lbGrids.SelectionMode = SelectionMode.One;
             lbGrids.SelectedIndexChanged += delegate
@@ -909,6 +927,10 @@ namespace OurStudents
             btnSettings.Checked = false;
             btnGrids.Checked = false;
             btnDB.Checked = false;
+            btnEarnings.Checked = false;
+            btnExpenses.Checked = false;
+            btnPaymentReport.Checked = false;
+
             (sender as RibbonButton).Checked = true;
         }
 
