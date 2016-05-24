@@ -679,6 +679,7 @@ namespace OurStudents
             SelectButton(sender);
             HideSecondaryTab();
             _tabMainPlaceholder.Text = "Настройки";
+            _tabMainPlaceholder.Controls.Clear();
 
             var settingsPanel = new MetroPanel
             {
@@ -760,10 +761,33 @@ namespace OurStudents
                                               AppSettings.DefaultCostsSingle.ToString("0.00");
                                       };
 
-            settingsPanel.Controls.Add(cancelButton);
+            _tabMainPlaceholder.Controls.Add(new MetroLabel
+                                             {
+                                                 Text = "Выберите типы оплат, которые будут учтены в отчете.",
+                                                 Top = 20,
+                                                 Left = 500,
+                                                 AutoSize = true
+                                             });
 
-            _tabMainPlaceholder.Controls.Clear();
-            _tabMainPlaceholder.Controls.Add(settingsPanel);
+            var chlbPaymentsSettings = new CheckedListBox
+                                     {
+                                         Name = "chlbPaymentsSettings",
+                                         Top = 50,
+                                         Width = 250,
+                                         Height = 300,
+                                         Left = 500,
+                                         ValueMember = "Code",
+                                         DisplayMember = "Name"
+                                     };
+
+            foreach (var item in Db.PaymentReportSettings)
+                chlbPaymentsSettings.Items.Add(item, item.ShouldBeCount);
+
+            chlbPaymentsSettings.ItemCheck += PaymentCostChanged;
+            _tabMainPlaceholder.Controls.Add(chlbPaymentsSettings);
+
+            settingsPanel.Controls.Add(cancelButton);
+           _tabMainPlaceholder.Controls.Add(settingsPanel);
         }
 
         private void GridsClick(object sender, EventArgs e)
@@ -844,7 +868,7 @@ namespace OurStudents
             lbGrids.Items.Add(new Tuple<int, string>(DataBase.GridsIds.PaymentsGridId, "Платежи"));
             lbGrids.Items.Add(new Tuple<int, string>(DataBase.GridsIds.EarningsGridId, "Доходы"));
             lbGrids.Items.Add(new Tuple<int, string>(DataBase.GridsIds.ExpensesGridId, "Расходы"));
-            lbGrids.Items.Add(new Tuple<int, string>(DataBase.GridsIds.PaymentsReportGridId, "Отет"));
+            lbGrids.Items.Add(new Tuple<int, string>(DataBase.GridsIds.PaymentsReportGridId, "Отчет"));
             lbGrids.Items.Add(new Tuple<int, string>(DataBase.GridsIds.GroupsGridId, "Группы"));
             lbGrids.Items.Add(new Tuple<int, string>(DataBase.GridsIds.PrivateGridId, "Индивидуальные"));
             lbGrids.Items.Add(new Tuple<int, string>(DataBase.GridsIds.MasterGridId, "Мастер-классы"));
@@ -866,6 +890,22 @@ namespace OurStudents
             _tabMainPlaceholder.Controls.Add(chlbGrids);
             _tabMainPlaceholder.Controls.Add(btnUp);
             _tabMainPlaceholder.Controls.Add(btnDown);
+        }
+
+        private void PaymentCostChanged(object sender, ItemCheckEventArgs e)
+        {
+            var chlbPaymentsSettings = (CheckedListBox)_tabMainPlaceholder.Controls["chlbPaymentsSettings"];
+            if (chlbPaymentsSettings == null) return;
+
+            var elem = chlbPaymentsSettings.Items[e.Index] as PaymentReportSettings;
+            if (elem == null) return;
+
+            var edit =
+                Db.PaymentReportSettings.FirstOrDefault(c => c.Code == elem.Code);
+            if (edit == null)
+                return;
+            edit.ShouldBeCount = Convert.ToBoolean(e.NewValue);
+            Db.SubmitChanges();
         }
 
         private void ColumnVisibilityChanged(object sender, ItemCheckEventArgs e)

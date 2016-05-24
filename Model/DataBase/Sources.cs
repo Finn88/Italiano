@@ -10,13 +10,13 @@ namespace Model
 {
     public partial class DataBase
     {
-
         public BindingListView<PaymentEntity> GetPaymentsList(bool isDetailsGrid, string detailsId, DateTime datefrom,
                DateTime dateto)
         {
             if (isDetailsGrid)
                 return new BindingListView<PaymentEntity>((from p in Payments
                                                            join c in Persons on p.PersonId equals c.Id
+                                                           join r in PaymentReportSettings on p.PaymentType equals r.Code
                                                            where c.Id == detailsId && c.PersonType == 'S'
                                                            where p.PaymentDate >= datefrom && p.PaymentDate <= dateto
                                                            orderby c.Id, p.PaymentDate
@@ -29,10 +29,12 @@ namespace Model
                                                                DateToString = p.DateToString,
                                                                PaymentDateString = p.PaymentDateString,
                                                                CustomerName = c.FullName,
-                                                               PaymentsDate = p.PaymentDate
+                                                               PaymentsDate = p.PaymentDate,
+                                                               PaymentType = r.Name
                                                            }).ToList());
             return new BindingListView<PaymentEntity>((from p in Payments
                                                        join c in Persons on p.PersonId equals c.Id
+                                                       join r in PaymentReportSettings on p.PaymentType equals r.Code
                                                        where p.PaymentDate >= datefrom && p.PaymentDate <= dateto
                                                        orderby p.PaymentDate
                                                        select new PaymentEntity
@@ -44,7 +46,30 @@ namespace Model
                                                            DateToString = p.DateToString,
                                                            PaymentDateString = p.PaymentDateString,
                                                            CustomerName = c.FullName,
-                                                           PaymentsDate = p.PaymentDate
+                                                           PaymentsDate = p.PaymentDate,
+                                                           PaymentType = r.Name
+                                                       }).ToList());
+        }
+
+        private BindingListView<PaymentEntity> GetPaymentsList(DateTime datefrom, DateTime dateto)
+        {
+            return new BindingListView<PaymentEntity>((from p in Payments
+                                                       join c in Persons on p.PersonId equals c.Id
+                                                       join r in PaymentReportSettings on p.PaymentType equals r.Code
+                                                       where r.ShouldBeCount
+                                                       where p.PaymentDate >= datefrom && p.PaymentDate <= dateto
+                                                       orderby p.PaymentDate
+                                                       select new PaymentEntity
+                                                       {
+                                                           Id = p.Id,
+                                                           PersonId = p.PersonId,
+                                                           Costs = p.Costs,
+                                                           DateFromString = p.DateFromString,
+                                                           DateToString = p.DateToString,
+                                                           PaymentDateString = p.PaymentDateString,
+                                                           CustomerName = c.FullName,
+                                                           PaymentsDate = p.PaymentDate,
+                                                           PaymentType = r.Name
                                                        }).ToList());
         }
 
@@ -196,7 +221,7 @@ namespace Model
         {
             var expenses = GetBudgetList(false, datefrom, dateto);
             var earning = GetBudgetList(true, datefrom, dateto);
-            var payments = GetPaymentsList(false, string.Empty, datefrom, dateto);
+            var payments = GetPaymentsList(datefrom, dateto);
 
             var returnList = new List<PaymentsReportEntity>();
             for (var i = 0; i <= (dateto - datefrom).TotalDays; i++)

@@ -43,6 +43,8 @@ namespace OurStudents
             this.tbCosts = new System.Windows.Forms.TextBox();
             this.dtPaymentDate = new System.Windows.Forms.DateTimePicker();
             this.lbPaymentDate = new System.Windows.Forms.Label();
+            this.cmbPaymentFor = new System.Windows.Forms.ComboBox();
+            this.lbPaymentFor = new System.Windows.Forms.Label();
             this.gbPaymentDates.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -148,10 +150,7 @@ namespace OurStudents
             this.tbCosts.Name = "tbCosts";
             this.tbCosts.Size = new System.Drawing.Size(63, 20);
             this.tbCosts.TabIndex = 93;
-           // this.tbCosts.Text = "595.00";
             this.tbCosts.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            tbCosts.KeyUp += SetCosts;
-            tbCosts.KeyPress += KeyPress;
             // 
             // dtPaymentDate
             // 
@@ -171,12 +170,31 @@ namespace OurStudents
             this.lbPaymentDate.TabIndex = 95;
             this.lbPaymentDate.Text = "Дата оплаты:";
             // 
+            // cmbPaymentFor
+            // 
+            this.cmbPaymentFor.FormattingEnabled = true;
+            this.cmbPaymentFor.Location = new System.Drawing.Point(267, 118);
+            this.cmbPaymentFor.Name = "cmbPaymentFor";
+            this.cmbPaymentFor.Size = new System.Drawing.Size(135, 21);
+            this.cmbPaymentFor.TabIndex = 96;
+            // 
+            // lbPaymentFor
+            // 
+            this.lbPaymentFor.AutoSize = true;
+            this.lbPaymentFor.Location = new System.Drawing.Point(181, 121);
+            this.lbPaymentFor.Name = "lbPaymentFor";
+            this.lbPaymentFor.Size = new System.Drawing.Size(62, 13);
+            this.lbPaymentFor.TabIndex = 97;
+            this.lbPaymentFor.Text = "Оплата за:";
+            // 
             // PaymentsEditForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(480, 211);
             this.ControlBox = false;
+            this.Controls.Add(this.lbPaymentFor);
+            this.Controls.Add(this.cmbPaymentFor);
             this.Controls.Add(this.lbPaymentDate);
             this.Controls.Add(this.dtPaymentDate);
             this.Controls.Add(this.tbCosts);
@@ -231,6 +249,8 @@ namespace OurStudents
         private System.Windows.Forms.TextBox tbCosts;
         private System.Windows.Forms.DateTimePicker dtPaymentDate;
         private System.Windows.Forms.Label lbPaymentDate;
+        private ComboBox cmbPaymentFor;
+        private Label lbPaymentFor;
 
     }
 }

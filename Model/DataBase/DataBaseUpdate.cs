@@ -71,6 +71,8 @@ namespace Model
             UpdateDB1();
             UpdateDB2();
             UpdateDB3();
+            UpdateDB4();
+            UpdateDB5();
         }
 
         private void UpdateDB1()
@@ -274,7 +276,6 @@ namespace Model
             SubmitChanges();
         }
 
-
         private void UpdateDB3()
         {
             if (GridsSettings.Any(c => c.GridId == GridsIds.PaymentsReportGridId)) return;
@@ -361,6 +362,39 @@ namespace Model
                               });
             SubmitChanges();
         }
+        
+        private void UpdateDB4()
+        {
+            if (GridsSettings.Any(c => c.GridId == GridsIds.PaymentsGridId && c.ColumnName == "PaymentType")) return;
 
+            var flag = GridsSettings.Where(c => c.GridId == GridsIds.PaymentsGridId).Max(c => c.OrderNr) + 1;
+            GridsSettings.Add(new GridsSettings
+            {
+                GridId = GridsIds.PaymentsGridId,
+                ColumnHeader = "Оплата за",
+                ColumnName = "PaymentType",
+                IsVisible = false,
+                OrderNr = flag,
+                Width = 100
+            });
+
+            Payments.ForEach(c => c.PaymentType = 'A');
+
+            SubmitChanges();
+        }
+        
+        private void UpdateDB5()
+        {
+          if (PaymentReportSettings.Any()) return;
+
+          PaymentReportSettings.Add(new PaymentReportSettings { Code = 'A', Name = "Группа", ShouldBeCount = false });
+          PaymentReportSettings.Add(new PaymentReportSettings { Code = 'B', Name = "Индивидуальные", ShouldBeCount = true });
+          PaymentReportSettings.Add(new PaymentReportSettings { Code = 'C', Name = "Мастер-класс", ShouldBeCount = true });
+          PaymentReportSettings.Add(new PaymentReportSettings { Code = 'D', Name = "Мероприятие", ShouldBeCount = true });
+          PaymentReportSettings.Add(new PaymentReportSettings { Code = 'E', Name = "Разговорный клуб", ShouldBeCount = true });
+          PaymentReportSettings.Add(new PaymentReportSettings { Code = 'Z', Name = "Другое", ShouldBeCount = true });
+
+          SubmitChanges();
+        }
     }
 }

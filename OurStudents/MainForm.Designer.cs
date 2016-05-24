@@ -58,6 +58,12 @@ namespace OurStudents
             this.tabMoney = new System.Windows.Forms.RibbonTab();
             this.ribbonPanel7 = new System.Windows.Forms.RibbonPanel();
             this.btnMoney = new System.Windows.Forms.RibbonButton();
+            this.ribbonPanel11 = new System.Windows.Forms.RibbonPanel();
+            this.btnEarnings = new System.Windows.Forms.RibbonButton();
+            this.ribbonPanel12 = new System.Windows.Forms.RibbonPanel();
+            this.btnExpenses = new System.Windows.Forms.RibbonButton();
+            this.ribbonPanel13 = new System.Windows.Forms.RibbonPanel();
+            this.btnPaymentReport = new System.Windows.Forms.RibbonButton();
             this.tabScheduler = new System.Windows.Forms.RibbonTab();
             this.ribbonPanel3 = new System.Windows.Forms.RibbonPanel();
             this.btnSheduler = new System.Windows.Forms.RibbonButton();
@@ -69,12 +75,6 @@ namespace OurStudents
             this.TablesSettings = new System.Windows.Forms.RibbonPanel();
             this.btnGrids = new System.Windows.Forms.RibbonButton();
             this._backgroundWorker = new System.ComponentModel.BackgroundWorker();
-            this.ribbonPanel11 = new System.Windows.Forms.RibbonPanel();
-            this.btnEarnings = new System.Windows.Forms.RibbonButton();
-            this.ribbonPanel12 = new System.Windows.Forms.RibbonPanel();
-            this.btnExpenses = new System.Windows.Forms.RibbonButton();
-            this.ribbonPanel13 = new System.Windows.Forms.RibbonPanel();
-            this.btnPaymentReport = new System.Windows.Forms.RibbonButton();
             this.SuspendLayout();
             // 
             // ribbonTabStudents
@@ -255,6 +255,48 @@ namespace OurStudents
             this.btnMoney.Text = "";
             this.btnMoney.Click += new System.EventHandler(this.PaymentsMenuClick);
             // 
+            // ribbonPanel11
+            // 
+            this.ribbonPanel11.ButtonMoreEnabled = false;
+            this.ribbonPanel11.ButtonMoreVisible = false;
+            this.ribbonPanel11.Items.Add(this.btnEarnings);
+            this.ribbonPanel11.Text = "Доходы";
+            // 
+            // btnEarnings
+            // 
+            this.btnEarnings.Image = ((System.Drawing.Image)(resources.GetObject("btnEarnings.Image")));
+            this.btnEarnings.SmallImage = ((System.Drawing.Image)(resources.GetObject("btnEarnings.SmallImage")));
+            this.btnEarnings.Text = "";
+            this.btnEarnings.Click += new System.EventHandler(this.EarningsMenuClick);
+            // 
+            // ribbonPanel12
+            // 
+            this.ribbonPanel12.ButtonMoreEnabled = false;
+            this.ribbonPanel12.ButtonMoreVisible = false;
+            this.ribbonPanel12.Items.Add(this.btnExpenses);
+            this.ribbonPanel12.Text = "Расходы";
+            // 
+            // btnExpenses
+            // 
+            this.btnExpenses.Image = ((System.Drawing.Image)(resources.GetObject("btnExpenses.Image")));
+            this.btnExpenses.SmallImage = ((System.Drawing.Image)(resources.GetObject("btnExpenses.SmallImage")));
+            this.btnExpenses.Text = "";
+            this.btnExpenses.Click += new System.EventHandler(this.ExpensesMenuClick);
+            // 
+            // ribbonPanel13
+            // 
+            this.ribbonPanel13.ButtonMoreEnabled = false;
+            this.ribbonPanel13.ButtonMoreVisible = false;
+            this.ribbonPanel13.Items.Add(this.btnPaymentReport);
+            this.ribbonPanel13.Text = "Отчет";
+            // 
+            // btnPaymentReport
+            // 
+            this.btnPaymentReport.Image = ((System.Drawing.Image)(resources.GetObject("btnPaymentReport.Image")));
+            this.btnPaymentReport.SmallImage = ((System.Drawing.Image)(resources.GetObject("btnPaymentReport.SmallImage")));
+            this.btnPaymentReport.Text = "";
+            this.btnPaymentReport.Click += new System.EventHandler(this.PaymentReportMenuClick);
+            // 
             // tabScheduler
             // 
             this.tabScheduler.Panels.Add(this.ribbonPanel3);
@@ -322,54 +364,13 @@ namespace OurStudents
             this.btnGrids.Text = "";
             this.btnGrids.Click += new System.EventHandler(this.GridsClick);
             // 
-            // ribbonPanel11
-            // 
-            this.ribbonPanel11.ButtonMoreEnabled = false;
-            this.ribbonPanel11.ButtonMoreVisible = false;
-            this.ribbonPanel11.Items.Add(this.btnEarnings);
-            this.ribbonPanel11.Text = "Доходы";
-            // 
-            // btnEarnings
-            // 
-            this.btnEarnings.Image = ((System.Drawing.Image)(resources.GetObject("btnEarnings.Image")));
-            this.btnEarnings.SmallImage = ((System.Drawing.Image)(resources.GetObject("btnEarnings.SmallImage")));
-            this.btnEarnings.Text = "";
-            this.btnEarnings.Click += new System.EventHandler(this.EarningsMenuClick);
-            // 
-            // ribbonPanel12
-            // 
-            this.ribbonPanel12.ButtonMoreEnabled = false;
-            this.ribbonPanel12.ButtonMoreVisible = false;
-            this.ribbonPanel12.Items.Add(this.btnExpenses);
-            this.ribbonPanel12.Text = "Расходы";
-            // 
-            // btnExpenses
-            // 
-            this.btnExpenses.Image = ((System.Drawing.Image)(resources.GetObject("btnExpenses.Image")));
-            this.btnExpenses.SmallImage = ((System.Drawing.Image)(resources.GetObject("btnExpenses.SmallImage")));
-            this.btnExpenses.Text = "";
-            this.btnExpenses.Click += new System.EventHandler(this.ExpensesMenuClick);
-            // 
-            // ribbonPanel13
-            // 
-            this.ribbonPanel13.ButtonMoreEnabled = false;
-            this.ribbonPanel13.ButtonMoreVisible = false;
-            this.ribbonPanel13.Items.Add(this.btnPaymentReport);
-            this.ribbonPanel13.Text = "Отчет";
-            // 
-            // btnPaymentReport
-            // 
-            this.btnPaymentReport.Image = ((System.Drawing.Image)(resources.GetObject("btnPaymentReport.Image")));
-            this.btnPaymentReport.SmallImage = ((System.Drawing.Image)(resources.GetObject("btnPaymentReport.SmallImage")));
-            this.btnPaymentReport.Text = "";
-            this.btnPaymentReport.Click += new System.EventHandler(this.PaymentReportMenuClick);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(833, 365);
             this.Controls.Add(this.ribbon1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
             this.Name = "MainForm";
             this.Style = MetroFramework.MetroColorStyle.Green;

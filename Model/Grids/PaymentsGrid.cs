@@ -53,6 +53,8 @@ namespace Model.Grids
             (dialog.Controls["dtPaymentDate"] as DateTimePicker).Value = payment.PaymentDate;
             (dialog.Controls["tbPaymentsComments"] as TextBox).Text = payment.Comments;
             (dialog.Controls["tbCosts"] as TextBox).Text = payment.Costs.ToString("#.00");
+            (dialog.Controls["cmbPaymentFor"] as ComboBox).SelectedValue =
+                payment.PaymentType;
 
             dialog.ShowDialog();
         }

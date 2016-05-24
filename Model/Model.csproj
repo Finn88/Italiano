@@ -82,6 +82,7 @@
   <ItemGroup>
     <Compile Include="DataBase\Sources.cs" />
     <Compile Include="DataBase\Entities.cs" />
+    <Compile Include="DataBase\Tables\PaymentReportSettings.cs" />
     <Compile Include="Grids\PaymentsReportGrid.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -122,15 +123,15 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="Tables\Budget.cs" />
-    <Compile Include="Tables\GridsSettings.cs" />
-    <Compile Include="Tables\Settings.cs" />
-    <Compile Include="Tables\EventsParticipants.cs" />
-    <Compile Include="Tables\Events.cs" />
-    <Compile Include="Tables\GroupsDays.cs" />
-    <Compile Include="Tables\Payments.cs" />
-    <Compile Include="Tables\Groups.cs" />
-    <Compile Include="Tables\Persons.cs" />
+    <Compile Include="DataBase\Tables\Budget.cs" />
+    <Compile Include="DataBase\Tables\GridsSettings.cs" />
+    <Compile Include="DataBase\Tables\Settings.cs" />
+    <Compile Include="DataBase\Tables\EventsParticipants.cs" />
+    <Compile Include="DataBase\Tables\Events.cs" />
+    <Compile Include="DataBase\Tables\GroupsDays.cs" />
+    <Compile Include="DataBase\Tables\Payments.cs" />
+    <Compile Include="DataBase\Tables\Groups.cs" />
+    <Compile Include="DataBase\Tables\Persons.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

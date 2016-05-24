@@ -50,7 +50,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>1455653402_Flag_of_Italy.ico</ApplicationIcon>
+    <ApplicationIcon>1464091487_italy.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationManifest>app.manifest</ApplicationManifest>
@@ -239,7 +239,7 @@
     <None Include="Resources\1455907230_02_calendar.png" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="1455653402_Flag_of_Italy.ico" />
+    <Content Include="1464091487_italy.ico" />
     <Content Include="Resources\1455418475_Teacher.png" />
   </ItemGroup>
   <ItemGroup>

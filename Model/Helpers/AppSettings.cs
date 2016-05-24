@@ -42,8 +42,7 @@ namespace Model
                 SetValue("DCS", "Default Costs Single", value.ToString());
             }
         }
-
- 
+        
         private void GetValue(string code, string description, ref string value)
         {
             var setting = _data.Settings.FirstOrDefault(c => c.Code == code);

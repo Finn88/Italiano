@@ -15,6 +15,7 @@ namespace Model
         public string DateToString { get; set; }
         public string PaymentDateString { get; set; }
         public string CustomerName { get; set; }
+        public string PaymentType { get; set; }
         public DateTime PaymentsDate { get; set; }
     }
 

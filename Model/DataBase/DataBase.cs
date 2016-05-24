@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using Model.Tables;
-using Equin.ApplicationFramework;
 using System.Xml.Serialization;
 
 namespace Model
@@ -22,6 +20,7 @@ namespace Model
         [XmlArray] [XmlArrayItem("Settings")] public List<Settings> Settings;
         [XmlArray] [XmlArrayItem("GridsSettings")] public List<GridsSettings> GridsSettings;
         [XmlArray] [XmlArrayItem("Budget")] public List<Budget> Budget;
+        [XmlArray] [XmlArrayItem("PaymentReportSettings")] public List<PaymentReportSettings> PaymentReportSettings;
     }
 
     public partial class DataBase
@@ -70,8 +69,12 @@ namespace Model
         {
             get { return Entities.Budget; }
         }
-        
 
+        public List<PaymentReportSettings> PaymentReportSettings
+        {
+            get { return Entities.PaymentReportSettings; }
+        }
+        
         private readonly string _connectionString;
         private readonly XmlSerializer _serializer;
         private readonly string _path;

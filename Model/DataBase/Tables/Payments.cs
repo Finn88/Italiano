@@ -19,6 +19,10 @@ namespace Model.Tables
         public string PersonId { get; set; }
 
         [XmlElement]
+        [DataBase.CoulmnId("Оплата за")]
+        public char PaymentType { get; set; }// PaymentsTypes class values
+
+        [XmlElement]
         [DataBase.CoulmnId("Сумма")]
         public Decimal Costs { get; set; }
 
