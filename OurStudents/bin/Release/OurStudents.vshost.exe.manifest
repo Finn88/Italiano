@@ -77,14 +77,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Model.dll" size="100864">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Model.dll" size="101888">
       <assemblyIdentity name="Model" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>dynpP6oBdhT3KSHPMyjK9fq70wY=</dsig:DigestValue>
+        <dsig:DigestValue>NeSFuspwV0xTGvwJT5jA1Isq9mU=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -96,7 +96,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>spXFKaQGXeNB1phZRiIP2CJV1Ng=</dsig:DigestValue>
+        <dsig:DigestValue>McRML+Ea8K8WXJTOPSZfPU0w3yU=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

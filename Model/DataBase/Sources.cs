@@ -170,11 +170,12 @@ namespace Model
                                                       {
                                                           Id = e.Id,
                                                           EventName = e.EventName,
-                                                          MasterName = (p != null ? p.LastName + " " + p.FirstName : ""),
-                                                          Date = e.DateString,
-                                                          StartTime = e.StartTimeString,
-                                                          EndTime = e.EndTimeString,
-                                                          IsActive = e.IsActive
+                                                          MasterId = (p != null ? p.LastName + " " + p.FirstName : ""),
+                                                          DateString = e.DateString,
+                                                          StartTimeString = e.StartTimeString,
+                                                          EndTimeString = e.EndTimeString,
+                                                          IsActive = e.IsActive,
+                                                          Costs = e.Costs
                                                       }).ToList());
         }
 
@@ -185,27 +186,48 @@ namespace Model
                     select g).ToList();
         }
 
+        private class SchedulerEvent
+        {
+            public string Name { get; set; }
+            public Color BackColor { get; set; }
+            public DateTime Date { get; set; }
+            public string Time { get; set; }
+        }
+
         public ListViewItem[] GetScheduler(DateTime dStart)
         {
-            //var date = dStart.StartOfWeek(DayOfWeek.Monday);
             var returnList = new List<ListViewItem>();
             var list = (from gr in Groups
-                        join grDays in GroupsDays.Where(c => c.Day == (int)dStart.DayOfWeek) on gr.Id equals grDays.GroupId
-                        where gr.StartEducation <= dStart
-                        orderby grDays.StartTime, gr.GroupType
-                        select new
-                        {
-                            gr.Name,
-                            gr.GroupType,
-                            time = (grDays.StartTimeString + " - " + grDays.EndTimeString)
-                        }).ToList();
+                join grDays in GroupsDays.Where(c => c.Day == (int) dStart.DayOfWeek) on gr.Id equals grDays.GroupId
+                where gr.StartEducation <= dStart
+                orderby grDays.StartTime, gr.GroupType
+                select new SchedulerEvent
+                       {
+                           Name = gr.Name,
+                           BackColor = gr.GroupType == 'C' ? Color.GreenYellow : Color.LightCoral,
+                           Date = dStart.Date + grDays.StartTime.TimeOfDay,
+                           Time = grDays.StartTimeString + " - " + grDays.EndTimeString
+                       }).ToList();
+            list.AddRange((from gr in Events
+                where gr.StartDate.Date == dStart
+                orderby gr.StartDate, gr.EventType
+                select new SchedulerEvent
+                       {
+                           Name = gr.EventName,
+                           BackColor = gr.EventType == 'M' ? Color.SkyBlue : Color.Plum,
+                           Date = gr.StartDate,
+                           Time = gr.StartTimeString + " - " + gr.EndTimeString
+                       }).ToList());
+
+            list = list.OrderBy(c => c.Date).ToList();
             foreach (var item in list)
             {
                 var listItem = new ListViewItem(item.Name);
-                listItem.SubItems.Add(item.time);
-                listItem.BackColor = item.GroupType == 'C' ? Color.GreenYellow : Color.LightCoral;
+                listItem.SubItems.Add(item.Time);
+                listItem.BackColor = item.BackColor;
                 returnList.Add(listItem);
             }
+
             return returnList.ToArray();
         }
 

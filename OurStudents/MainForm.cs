@@ -19,10 +19,10 @@ namespace OurStudents
         private MetroGrid _currentGrid;
         private MetroGrid _secondaryGrid;
    
-        public TabControl _tabControl;
-        public LoadingPanel _spinnerPanel;
-        public TabPage _tabMainPlaceholder;
-        public TabPage _tabSecondaryPlaceholder;
+        public TabControl TabControl;
+        public LoadingPanel SpinnerPanel;
+        public TabPage TabMainPlaceholder;
+        public TabPage TabSecondaryPlaceholder;
 
 
         public MainForm()
@@ -46,12 +46,12 @@ namespace OurStudents
         private void OnMainForm(object sender, EventArgs e)
         {
             _searchForm = new Search();
-            _tabControl = new MetroTabControl { Width = Width, Height = Height, Top=ribbon1.Bottom, Style = MetroColorStyle.Green};
-            _spinnerPanel = new LoadingPanel();
-            _tabMainPlaceholder = new MetroTabPage();
-            _tabSecondaryPlaceholder = new MetroTabPage();
-            _tabControl.Controls.Add(_tabMainPlaceholder);
-            Controls.Add(_tabControl);
+            TabControl = new MetroTabControl { Width = Width, Height = Height, Top=ribbon1.Bottom, Style = MetroColorStyle.Green};
+            SpinnerPanel = new LoadingPanel();
+            TabMainPlaceholder = new MetroTabPage();
+            TabSecondaryPlaceholder = new MetroTabPage();
+            TabControl.Controls.Add(TabMainPlaceholder);
+            Controls.Add(TabControl);
 
 
             Db = new DataBase(Program.DBName);
@@ -72,9 +72,9 @@ namespace OurStudents
                     {
                         Invoke((MethodInvoker) (() =>
                         {
-                            _spinnerPanel = new LoadingPanel();
-                            _spinnerPanel.UpdateLoadingText("Создание новой базы данных...");
-                            _spinnerPanel.Show();
+                            SpinnerPanel = new LoadingPanel();
+                            SpinnerPanel.UpdateLoadingText("Создание новой базы данных...");
+                            SpinnerPanel.Show();
                         }));
 
                         Db.CreateNewDatabase();
@@ -82,7 +82,7 @@ namespace OurStudents
                     };
                     _backgroundWorker.RunWorkerCompleted += (s, arg) => Invoke(new Action(() =>
                     {
-                        _spinnerPanel.Close();
+                        SpinnerPanel.Close();
                         btnStudents.PerformClick();
                         ribbon1.Enabled = true;
                     }));
@@ -106,16 +106,16 @@ namespace OurStudents
         {
             _paymentsGrid = new PaymentsGrid(Db)
             {
-                MaximumSize = new Size(_tabMainPlaceholder.Width - 50, _tabMainPlaceholder.Height - 250),
+                MaximumSize = new Size(TabMainPlaceholder.Width - 50, TabMainPlaceholder.Height - 250),
                 EditForm = new PaymentsEditForm { AppSettings = AppSettings },
-                MainTabControl = _tabControl,
-                MainPlaceholder = _tabMainPlaceholder,
-                SecondaryPlaceholder = _tabSecondaryPlaceholder
+                MainTabControl = TabControl,
+                MainPlaceholder = TabMainPlaceholder,
+                SecondaryPlaceholder = TabSecondaryPlaceholder
             };
 
             SelectButton(sender);
             HideSecondaryTab();
-            _tabMainPlaceholder.Text = "Платежи";
+            TabMainPlaceholder.Text = "Платежи";
 
             var startMonth = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1);
             var endMonth = startMonth.AddMonths(1).AddDays(-1);
@@ -123,18 +123,18 @@ namespace OurStudents
             var backgroundLoader = new BackgroundWorker();
             backgroundLoader.DoWork += (s, arg) =>
             {
-                this.Invoke((MethodInvoker)(() =>
+                Invoke((MethodInvoker)(() =>
                 {
-                    _spinnerPanel = new LoadingPanel();
-                    _spinnerPanel.UpdateLoadingText("Загружаеются данные...");
-                    _spinnerPanel.Show();
+                    SpinnerPanel = new LoadingPanel();
+                    SpinnerPanel.UpdateLoadingText("Загружаеются данные...");
+                    SpinnerPanel.Show();
                 }));
 
                 _paymentsGrid.Top = 0;
-                _paymentsGrid.Width = (_tabMainPlaceholder.Width / 2);
-                _paymentsGrid.Height = _tabMainPlaceholder.Height - 150;
+                _paymentsGrid.Width = (TabMainPlaceholder.Width / 2);
+                _paymentsGrid.Height = TabMainPlaceholder.Height - 150;
 
-                this.Invoke((MethodInvoker)(() =>
+                Invoke((MethodInvoker)(() =>
                 {
 
                     var datesPanel = new MetroPanel
@@ -143,7 +143,7 @@ namespace OurStudents
                         Width = 500,
                         Height = 300,
                         Top = 0,
-                        Left = (_tabMainPlaceholder.Width / 2) + 50,
+                        Left = (TabMainPlaceholder.Width / 2) + 50,
                     };
                     var dateFrom = new DateTimePicker
                                        {
@@ -195,7 +195,7 @@ namespace OurStudents
                     var total = new MetroLabel
                                     {
                                         Name = "lbTotal",
-                                        Text = _paymentsGrid.Total.ToString() + " грн.",
+                                        Text = _paymentsGrid.Total + " грн.",
                                         Top = 100,
                                         Left = 240,
                                         Width = 100,
@@ -207,27 +207,27 @@ namespace OurStudents
                                                {
                                                    _paymentsGrid.DateTo = dateTo.Value;
                                                    _paymentsGrid.RefreshGrid();
-                                                   total.Text = _paymentsGrid.Total.ToString() + " грн.";
+                                                   total.Text = _paymentsGrid.Total + " грн.";
                                                };
                     dateFrom.ValueChanged += (send, args) =>
                                                  {
                                                      _paymentsGrid.DateFrom = dateFrom.Value;
                                                      _paymentsGrid.RefreshGrid();
-                                                     total.Text = _paymentsGrid.Total.ToString() + " грн.";
+                                                     total.Text = _paymentsGrid.Total + " грн.";
                                                  };
 
 
-                    _tabMainPlaceholder.Controls.Clear();
-                    _tabMainPlaceholder.Controls.Add(datesPanel);
-                    _tabMainPlaceholder.Controls.Add(_paymentsGrid);
+                    TabMainPlaceholder.Controls.Clear();
+                    TabMainPlaceholder.Controls.Add(datesPanel);
+                    TabMainPlaceholder.Controls.Add(_paymentsGrid);
                     _currentGrid = _paymentsGrid;
                     _currentGrid.Select();
                 }));
             };
-            backgroundLoader.RunWorkerCompleted += (s, arg) => this.Invoke(new Action(() =>
+            backgroundLoader.RunWorkerCompleted += (s, arg) => Invoke(new Action(() =>
             {
-                _spinnerPanel.Close();
-                this.Activate();
+                SpinnerPanel.Close();
+                Activate();
             }));
             backgroundLoader.RunWorkerAsync();
         }
@@ -246,16 +246,16 @@ namespace OurStudents
         {
             _budgetGrid = new BudgetGrid(Db, isEarning)
             {
-                MaximumSize = new Size(_tabMainPlaceholder.Width - 50, _tabMainPlaceholder.Height - 250),
+                MaximumSize = new Size(TabMainPlaceholder.Width - 50, TabMainPlaceholder.Height - 250),
                 EditForm = new BudgetEditFrom { AppSettings = AppSettings },
-                MainTabControl = _tabControl,
-                MainPlaceholder = _tabMainPlaceholder,
-                SecondaryPlaceholder = _tabSecondaryPlaceholder
+                MainTabControl = TabControl,
+                MainPlaceholder = TabMainPlaceholder,
+                SecondaryPlaceholder = TabSecondaryPlaceholder
             };
 
             SelectButton(sender);
             HideSecondaryTab();
-            _tabMainPlaceholder.Text = isEarning ? "Доходы" : "Расходы";
+            TabMainPlaceholder.Text = isEarning ? "Доходы" : "Расходы";
 
             var startMonth = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1);
             var endMonth = startMonth.AddMonths(1).AddDays(-1);
@@ -263,18 +263,18 @@ namespace OurStudents
             var backgroundLoader = new BackgroundWorker();
             backgroundLoader.DoWork += (s, arg) =>
             {
-                this.Invoke((MethodInvoker)(() =>
+                Invoke((MethodInvoker)(() =>
                 {
-                    _spinnerPanel = new LoadingPanel();
-                    _spinnerPanel.UpdateLoadingText("Загружаеются данные...");
-                    _spinnerPanel.Show();
+                    SpinnerPanel = new LoadingPanel();
+                    SpinnerPanel.UpdateLoadingText("Загружаеются данные...");
+                    SpinnerPanel.Show();
                 }));
 
                 _budgetGrid.Top = 0;
-                _budgetGrid.Width = (_tabMainPlaceholder.Width / 2);
-                _budgetGrid.Height = _tabMainPlaceholder.Height - 150;
+                _budgetGrid.Width = (TabMainPlaceholder.Width / 2);
+                _budgetGrid.Height = TabMainPlaceholder.Height - 150;
 
-                this.Invoke((MethodInvoker)(() =>
+                Invoke((MethodInvoker)(() =>
                 {
 
                     var datesPanel = new MetroPanel
@@ -283,7 +283,7 @@ namespace OurStudents
                         Width = 500,
                         Height = 300,
                         Top = 0,
-                        Left = (_tabMainPlaceholder.Width / 2) + 50,
+                        Left = (TabMainPlaceholder.Width / 2) + 50,
                     };
                     var dateFrom = new DateTimePicker
                     {
@@ -356,17 +356,17 @@ namespace OurStudents
                         total.Text = _budgetGrid.Total + " грн.";
                     };
 
-                    _tabMainPlaceholder.Controls.Clear();
-                    _tabMainPlaceholder.Controls.Add(datesPanel);
-                    _tabMainPlaceholder.Controls.Add(_budgetGrid);
+                    TabMainPlaceholder.Controls.Clear();
+                    TabMainPlaceholder.Controls.Add(datesPanel);
+                    TabMainPlaceholder.Controls.Add(_budgetGrid);
                     _currentGrid = _budgetGrid;
                     _currentGrid.Select();
                 }));
             };
-            backgroundLoader.RunWorkerCompleted += (s, arg) => this.Invoke(new Action(() =>
+            backgroundLoader.RunWorkerCompleted += (s, arg) => Invoke(new Action(() =>
             {
-                _spinnerPanel.Close();
-                this.Activate();
+                SpinnerPanel.Close();
+                Activate();
             }));
             backgroundLoader.RunWorkerAsync();
         }
@@ -375,15 +375,15 @@ namespace OurStudents
         {
             _reportGrid = new PaymentsReportGrid(Db)
             {
-                MaximumSize = new Size(_tabMainPlaceholder.Width - 50, _tabMainPlaceholder.Height - 250),
-                MainTabControl = _tabControl,
-                MainPlaceholder = _tabMainPlaceholder,
-                SecondaryPlaceholder = _tabSecondaryPlaceholder
+                MaximumSize = new Size(TabMainPlaceholder.Width - 50, TabMainPlaceholder.Height - 250),
+                MainTabControl = TabControl,
+                MainPlaceholder = TabMainPlaceholder,
+                SecondaryPlaceholder = TabSecondaryPlaceholder
             };
 
             SelectButton(sender);
             HideSecondaryTab();
-            _tabMainPlaceholder.Text = "Отчет";
+            TabMainPlaceholder.Text = "Отчет";
 
             var startMonth = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1);
             var endMonth = startMonth.AddMonths(1).AddDays(-1);
@@ -391,18 +391,18 @@ namespace OurStudents
             var backgroundLoader = new BackgroundWorker();
             backgroundLoader.DoWork += (s, arg) =>
             {
-                this.Invoke((MethodInvoker)(() =>
+                Invoke((MethodInvoker)(() =>
                 {
-                    _spinnerPanel = new LoadingPanel();
-                    _spinnerPanel.UpdateLoadingText("Загружаеются данные...");
-                    _spinnerPanel.Show();
+                    SpinnerPanel = new LoadingPanel();
+                    SpinnerPanel.UpdateLoadingText("Загружаеются данные...");
+                    SpinnerPanel.Show();
                 }));
 
                 _reportGrid.Top = 0;
-                _reportGrid.Width = (_tabMainPlaceholder.Width / 2)+250;
-                _reportGrid.Height = _tabMainPlaceholder.Height - 150;
+                _reportGrid.Width = (TabMainPlaceholder.Width / 2)+250;
+                _reportGrid.Height = TabMainPlaceholder.Height - 150;
 
-                this.Invoke((MethodInvoker)(() =>
+                Invoke((MethodInvoker)(() =>
                 {
 
                     var datesPanel = new MetroPanel
@@ -411,7 +411,7 @@ namespace OurStudents
                         Width = 500,
                         Height = 300,
                         Top = 0,
-                        Left = (_tabMainPlaceholder.Width / 2) + 300,
+                        Left = (TabMainPlaceholder.Width / 2) + 300,
                     };
                     var dateFrom = new DateTimePicker
                     {
@@ -484,17 +484,17 @@ namespace OurStudents
                         total.Text = _reportGrid.Total + " грн.";
                     };
 
-                    _tabMainPlaceholder.Controls.Clear();
-                    _tabMainPlaceholder.Controls.Add(datesPanel);
-                    _tabMainPlaceholder.Controls.Add(_reportGrid);
+                    TabMainPlaceholder.Controls.Clear();
+                    TabMainPlaceholder.Controls.Add(datesPanel);
+                    TabMainPlaceholder.Controls.Add(_reportGrid);
                     _currentGrid = _reportGrid;
                     _currentGrid.Select();
                 }));
             };
-            backgroundLoader.RunWorkerCompleted += (s, arg) => this.Invoke(new Action(() =>
+            backgroundLoader.RunWorkerCompleted += (s, arg) => Invoke(new Action(() =>
             {
-                _spinnerPanel.Close();
-                this.Activate();
+                SpinnerPanel.Close();
+                Activate();
             }));
             backgroundLoader.RunWorkerAsync();
         }
@@ -528,23 +528,23 @@ namespace OurStudents
                                  {
                                      IsDetailsGrid = true,
                                      Name = "paymentsGrid",
-                                     Width = _tabMainPlaceholder.Width - 50,
-                                     Height = _tabMainPlaceholder.Height - 350,
-                                     MaximumSize = new Size(_tabMainPlaceholder.Width - 50, _tabMainPlaceholder.Height - 250),
+                                     Width = TabMainPlaceholder.Width - 50,
+                                     Height = TabMainPlaceholder.Height - 350,
+                                     MaximumSize = new Size(TabMainPlaceholder.Width - 50, TabMainPlaceholder.Height - 250),
                                      EditForm = new PaymentsEditForm {AppSettings = AppSettings},
-                                     MainTabControl = _tabControl,
-                                     MainPlaceholder = _tabMainPlaceholder,
-                                     SecondaryPlaceholder = _tabSecondaryPlaceholder,
+                                     MainTabControl = TabControl,
+                                     MainPlaceholder = TabMainPlaceholder,
+                                     SecondaryPlaceholder = TabSecondaryPlaceholder,
                                      MainForm = this
                                  };
 
             _studentsGrid = new PersonsGrid(Db, PersonType.Student)
             {
                 EditForm = new PersonsEditGridForm(PersonType.Student),
-                MainTabControl = _tabControl,
-                MainPlaceholder = _tabMainPlaceholder,
-                SecondaryPlaceholder = _tabSecondaryPlaceholder,
-                PaymentDetailsGrid = (_secondaryGrid as PaymentsGrid),
+                MainTabControl = TabControl,
+                MainPlaceholder = TabMainPlaceholder,
+                SecondaryPlaceholder = TabSecondaryPlaceholder,
+                PaymentDetailsGrid = ((PaymentsGrid) _secondaryGrid),
                 MainForm = this
             };
 
@@ -557,9 +557,9 @@ namespace OurStudents
             {
                 Name = "teachersGrid",
                 EditForm = new PersonsEditGridForm(PersonType.Teacher),
-                MainTabControl = _tabControl,
-                MainPlaceholder = _tabMainPlaceholder,
-                SecondaryPlaceholder = _tabSecondaryPlaceholder,
+                MainTabControl = TabControl,
+                MainPlaceholder = TabMainPlaceholder,
+                SecondaryPlaceholder = TabSecondaryPlaceholder,
                 MainForm = this
             };
 
@@ -571,9 +571,9 @@ namespace OurStudents
             _contactsGrid = new PersonsGrid(Db, PersonType.Contact)
             {
                 EditForm = new PersonsEditGridForm(PersonType.Contact),
-                MainTabControl = _tabControl,
-                MainPlaceholder = _tabMainPlaceholder,
-                SecondaryPlaceholder = _tabSecondaryPlaceholder,
+                MainTabControl = TabControl,
+                MainPlaceholder = TabMainPlaceholder,
+                SecondaryPlaceholder = TabSecondaryPlaceholder,
                 MainForm = this
             };
 
@@ -590,22 +590,22 @@ namespace OurStudents
                                  {
                                      IsDetailsGrid = true,
                                      Name = "studetsDetailsGrid",
-                                     Width = _tabMainPlaceholder.Width - 50,
-                                     Height = _tabMainPlaceholder.Height - 150,
-                                     MaximumSize = new Size(_tabMainPlaceholder.Width - 50, _tabMainPlaceholder.Height - 250),
+                                     Width = TabMainPlaceholder.Width - 50,
+                                     Height = TabMainPlaceholder.Height - 150,
+                                     MaximumSize = new Size(TabMainPlaceholder.Width - 50, TabMainPlaceholder.Height - 250),
                                      EditForm = new PersonsEditGridForm(PersonType.Student) {IsDetails = true},
-                                     MainTabControl = _tabControl,
-                                     MainPlaceholder = _tabMainPlaceholder,
-                                     SecondaryPlaceholder = _tabSecondaryPlaceholder,
+                                     MainTabControl = TabControl,
+                                     MainPlaceholder = TabMainPlaceholder,
+                                     SecondaryPlaceholder = TabSecondaryPlaceholder,
                                      MainForm = this
                                  };
             _groupsGrid = new GroupsGrid(Db, GroupType.Common)
             {
                 EditForm = new GroupsEditForm(GroupType.Common),
-                MainTabControl = _tabControl,
-                MainPlaceholder = _tabMainPlaceholder,
-                SecondaryPlaceholder = _tabSecondaryPlaceholder,
-                PersonsDetailsGrid = _secondaryGrid as PersonsGrid,
+                MainTabControl = TabControl,
+                MainPlaceholder = TabMainPlaceholder,
+                SecondaryPlaceholder = TabSecondaryPlaceholder,
+                PersonsDetailsGrid = (PersonsGrid) _secondaryGrid,
                 MainForm = this
             };
 
@@ -618,23 +618,23 @@ namespace OurStudents
                                  {
                                      IsDetailsGrid = true,
                                      Name = "studetsDetailsGrid",
-                                     Width = _tabMainPlaceholder.Width - 50,
-                                     Height = _tabMainPlaceholder.Height - 150,
-                                     MaximumSize = new Size(_tabMainPlaceholder.Width - 50, _tabMainPlaceholder.Height - 250),
+                                     Width = TabMainPlaceholder.Width - 50,
+                                     Height = TabMainPlaceholder.Height - 150,
+                                     MaximumSize = new Size(TabMainPlaceholder.Width - 50, TabMainPlaceholder.Height - 250),
                                      EditForm = new PersonsEditGridForm(PersonType.Student) {IsDetails = true},
-                                     MainTabControl = _tabControl,
-                                     MainPlaceholder = _tabMainPlaceholder,
-                                     SecondaryPlaceholder = _tabSecondaryPlaceholder,
+                                     MainTabControl = TabControl,
+                                     MainPlaceholder = TabMainPlaceholder,
+                                     SecondaryPlaceholder = TabSecondaryPlaceholder,
                                      MainForm = this
                                  };
 
             _privateGrid = new GroupsGrid(Db, GroupType.Private)
             {
                 EditForm = new GroupsEditForm(GroupType.Private),
-                MainTabControl = _tabControl,
-                MainPlaceholder = _tabMainPlaceholder,
-                SecondaryPlaceholder = _tabSecondaryPlaceholder,
-                PersonsDetailsGrid = _secondaryGrid as PersonsGrid,
+                MainTabControl = TabControl,
+                MainPlaceholder = TabMainPlaceholder,
+                SecondaryPlaceholder = TabSecondaryPlaceholder,
+                PersonsDetailsGrid = (PersonsGrid) _secondaryGrid,
                 MainForm = this
             };
 
@@ -646,9 +646,9 @@ namespace OurStudents
             _masterEventGrid = new EventsGrid(Db, EventsType.Master)
             {
                 EditForm = new EventForm(EventsType.Master),
-                MainTabControl = _tabControl,
-                MainPlaceholder = _tabMainPlaceholder,
-                SecondaryPlaceholder = _tabSecondaryPlaceholder,
+                MainTabControl = TabControl,
+                MainPlaceholder = TabMainPlaceholder,
+                SecondaryPlaceholder = TabSecondaryPlaceholder,
                 MainForm = this
             };
 
@@ -660,9 +660,9 @@ namespace OurStudents
             _eventGrid = new EventsGrid(Db, EventsType.Event)
             {
                 EditForm = new EventForm(EventsType.Event),
-                MainTabControl = _tabControl,
-                MainPlaceholder = _tabMainPlaceholder,
-                SecondaryPlaceholder = _tabSecondaryPlaceholder,
+                MainTabControl = TabControl,
+                MainPlaceholder = TabMainPlaceholder,
+                SecondaryPlaceholder = TabSecondaryPlaceholder,
                 MainForm = this
             };
 
@@ -678,8 +678,8 @@ namespace OurStudents
             _currentGrid = null;
             SelectButton(sender);
             HideSecondaryTab();
-            _tabMainPlaceholder.Text = "Настройки";
-            _tabMainPlaceholder.Controls.Clear();
+            TabMainPlaceholder.Text = "Настройки";
+            TabMainPlaceholder.Controls.Clear();
 
             var settingsPanel = new MetroPanel
             {
@@ -732,11 +732,11 @@ namespace OurStudents
                                     {
                                         AppSettings.DefaultCosts =
                                             Convert.ToDecimal(
-                                                (_tabMainPlaceholder.Controls["pnSettings"].Controls["tbDefaultCosts"]
+                                                (TabMainPlaceholder.Controls["pnSettings"].Controls["tbDefaultCosts"]
                                                  as TextBox).Text);
                                         AppSettings.DefaultCostsSingle =
                                             Convert.ToDecimal(
-                                                (_tabMainPlaceholder.Controls["pnSettings"].Controls[
+                                                (TabMainPlaceholder.Controls["pnSettings"].Controls[
                                                     "tbDefaultCostsSingle"] as TextBox).Text);
 
                                         MessageBox.Show("Данные успешно сохранены.");
@@ -753,15 +753,15 @@ namespace OurStudents
             };
             cancelButton.Click += (s, args) =>
                                       {
-                                          (_tabMainPlaceholder.Controls["pnSettings"].Controls["tbDefaultCosts"] as
+                                          (TabMainPlaceholder.Controls["pnSettings"].Controls["tbDefaultCosts"] as
                                            TextBox).Text =
                                               AppSettings.DefaultCosts.ToString("0.00");
-                                          (_tabMainPlaceholder.Controls["pnSettings"].Controls["tbDefaultCostsSingle"]
+                                          (TabMainPlaceholder.Controls["pnSettings"].Controls["tbDefaultCostsSingle"]
                                            as TextBox).Text =
                                               AppSettings.DefaultCostsSingle.ToString("0.00");
                                       };
 
-            _tabMainPlaceholder.Controls.Add(new MetroLabel
+            TabMainPlaceholder.Controls.Add(new MetroLabel
                                              {
                                                  Text = "Выберите типы оплат, которые будут учтены в отчете.",
                                                  Top = 20,
@@ -784,10 +784,10 @@ namespace OurStudents
                 chlbPaymentsSettings.Items.Add(item, item.ShouldBeCount);
 
             chlbPaymentsSettings.ItemCheck += PaymentCostChanged;
-            _tabMainPlaceholder.Controls.Add(chlbPaymentsSettings);
+            TabMainPlaceholder.Controls.Add(chlbPaymentsSettings);
 
             settingsPanel.Controls.Add(cancelButton);
-           _tabMainPlaceholder.Controls.Add(settingsPanel);
+           TabMainPlaceholder.Controls.Add(settingsPanel);
         }
 
         private void GridsClick(object sender, EventArgs e)
@@ -795,8 +795,8 @@ namespace OurStudents
             _currentGrid = null;
             SelectButton(sender);
             HideSecondaryTab();
-            _tabMainPlaceholder.Text = "Таблицы";
-            _tabMainPlaceholder.Controls.Clear();
+            TabMainPlaceholder.Text = "Таблицы";
+            TabMainPlaceholder.Controls.Clear();
 
             var chlbGrids = new CheckedListBox
                                 {
@@ -835,7 +835,7 @@ namespace OurStudents
                               };
             btnDown.Click += DownClick;
 
-            _tabMainPlaceholder.Controls.Add(new MetroLabel
+            TabMainPlaceholder.Controls.Add(new MetroLabel
                                                  {
                                                      Text =
                                                          "Выберите колонки, которые будут отображены в таблице и их поочередность.",
@@ -844,7 +844,7 @@ namespace OurStudents
                                                      AutoSize = true
                                                  });
 
-            _tabMainPlaceholder.Controls.Add(new MetroLabel
+            TabMainPlaceholder.Controls.Add(new MetroLabel
                                                  {
                                                      Text = "Выберите таблицу.",
                                                      Top = 20,
@@ -886,15 +886,15 @@ namespace OurStudents
                                                         chlbGrids.Items.Add(item, item.IsVisible);
                                                     }
                                                 };
-            _tabMainPlaceholder.Controls.Add(lbGrids);
-            _tabMainPlaceholder.Controls.Add(chlbGrids);
-            _tabMainPlaceholder.Controls.Add(btnUp);
-            _tabMainPlaceholder.Controls.Add(btnDown);
+            TabMainPlaceholder.Controls.Add(lbGrids);
+            TabMainPlaceholder.Controls.Add(chlbGrids);
+            TabMainPlaceholder.Controls.Add(btnUp);
+            TabMainPlaceholder.Controls.Add(btnDown);
         }
 
         private void PaymentCostChanged(object sender, ItemCheckEventArgs e)
         {
-            var chlbPaymentsSettings = (CheckedListBox)_tabMainPlaceholder.Controls["chlbPaymentsSettings"];
+            var chlbPaymentsSettings = (CheckedListBox)TabMainPlaceholder.Controls["chlbPaymentsSettings"];
             if (chlbPaymentsSettings == null) return;
 
             var elem = chlbPaymentsSettings.Items[e.Index] as PaymentReportSettings;
@@ -910,13 +910,13 @@ namespace OurStudents
 
         private void ColumnVisibilityChanged(object sender, ItemCheckEventArgs e)
         {
-            var chlbGrids = (CheckedListBox)_tabMainPlaceholder.Controls["chlbGrids"];
+            var chlbGrids = (CheckedListBox)TabMainPlaceholder.Controls["chlbGrids"];
             if (chlbGrids == null) return;
 
             var elem = chlbGrids.Items[e.Index] as GridsSettings;
             if (elem == null) return;
 
-            var selectedGrid = _tabMainPlaceholder.Controls["lbGrids"] as ListBox;
+            var selectedGrid = TabMainPlaceholder.Controls["lbGrids"] as ListBox;
             if (selectedGrid == null) return;
 
             var edit =
@@ -932,13 +932,13 @@ namespace OurStudents
 
         private void UpClick(object sender, EventArgs e)
         {
-            var chlbGrids = (CheckedListBox)_tabMainPlaceholder.Controls["chlbGrids"];
+            var chlbGrids = (CheckedListBox)TabMainPlaceholder.Controls["chlbGrids"];
             if(chlbGrids == null)
                 return;
             var index = chlbGrids.SelectedIndex;
             if (index == 0 || index == -1) return;
 
-            var selectedGrid = _tabMainPlaceholder.Controls["lbGrids"] as ListBox;
+            var selectedGrid = TabMainPlaceholder.Controls["lbGrids"] as ListBox;
             if (selectedGrid == null) return;
             
             var elem1 = chlbGrids.Items[index];
@@ -958,13 +958,13 @@ namespace OurStudents
 
         private void DownClick(object sender, EventArgs e)
         {
-            var chlbGrids = (CheckedListBox)_tabMainPlaceholder.Controls["chlbGrids"];
+            var chlbGrids = (CheckedListBox)TabMainPlaceholder.Controls["chlbGrids"];
             if (chlbGrids == null)
                 return;
             var index = chlbGrids.SelectedIndex;
             if (index == -1 || index == chlbGrids.Items.Count - 1) return;
 
-            var selectedGrid = _tabMainPlaceholder.Controls["lbGrids"] as ListBox;
+            var selectedGrid = TabMainPlaceholder.Controls["lbGrids"] as ListBox;
             if (selectedGrid == null) return;
 
 
@@ -988,8 +988,8 @@ namespace OurStudents
             _currentGrid = null;
             SelectButton(sender);
             HideSecondaryTab();
-            _tabMainPlaceholder.Text = "База данных";
-            _tabMainPlaceholder.Controls.Clear();
+            TabMainPlaceholder.Text = "База данных";
+            TabMainPlaceholder.Controls.Clear();
 
 
             var lbCurrentDB = new MetroLabel
@@ -1040,11 +1040,11 @@ namespace OurStudents
             };
             buttonClearDB.Click += ClearDB;
 
-            _tabMainPlaceholder.Controls.Add(buttonSave);
-            _tabMainPlaceholder.Controls.Add(lbCurrentDB);
-            _tabMainPlaceholder.Controls.Add(lbCurrentDBName);
-            _tabMainPlaceholder.Controls.Add(buttonAddDB);
-            _tabMainPlaceholder.Controls.Add(buttonClearDB);
+            TabMainPlaceholder.Controls.Add(buttonSave);
+            TabMainPlaceholder.Controls.Add(lbCurrentDB);
+            TabMainPlaceholder.Controls.Add(lbCurrentDBName);
+            TabMainPlaceholder.Controls.Add(buttonAddDB);
+            TabMainPlaceholder.Controls.Add(buttonClearDB);
         }
 
         private void ClearDB(object sender, EventArgs e)
@@ -1070,7 +1070,7 @@ namespace OurStudents
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
                     Program.DBName = openFileDialog.SafeFileName.Replace(".xml", "");
-                    (_tabMainPlaceholder.Controls["lbCurrentDBName"] as MetroLabel).Text = openFileDialog.SafeFileName.Replace(".xml", ""); 
+                    (TabMainPlaceholder.Controls["lbCurrentDBName"] as MetroLabel).Text = openFileDialog.SafeFileName.Replace(".xml", ""); 
 
                     var path = AppDomain.CurrentDomain.BaseDirectory;
                     const string extention = ".xml";
@@ -1174,34 +1174,34 @@ namespace OurStudents
         {
             SelectButton(sender);
             HideSecondaryTab();
-            _tabMainPlaceholder.Text = tabText;
+            TabMainPlaceholder.Text = tabText;
 
             var backgroundLoader = new BackgroundWorker();
             backgroundLoader.DoWork += (s, arg) =>
             {
                 this.Invoke((MethodInvoker)(() =>
                 {
-                    _spinnerPanel = new LoadingPanel();
-                    _spinnerPanel.UpdateLoadingText("Загружаеются данные...");
-                    _spinnerPanel.Show();
+                    SpinnerPanel = new LoadingPanel();
+                    SpinnerPanel.UpdateLoadingText("Загружаеются данные...");
+                    SpinnerPanel.Show();
                 }));
 
                 grid.Top = 0;
-                grid.Width = (_tabMainPlaceholder.Width - 50);
-                grid.Height = _tabMainPlaceholder.Height - 150;
-                grid.MaximumSize = new Size(_tabMainPlaceholder.Width - 50, _tabMainPlaceholder.Height - 250);
+                grid.Width = (TabMainPlaceholder.Width - 50);
+                grid.Height = TabMainPlaceholder.Height - 150;
+                grid.MaximumSize = new Size(TabMainPlaceholder.Width - 50, TabMainPlaceholder.Height - 250);
 
                 this.Invoke((MethodInvoker)(() =>
                 {
-                    _tabMainPlaceholder.Controls.Clear();
-                    _tabMainPlaceholder.Controls.Add(grid);
+                    TabMainPlaceholder.Controls.Clear();
+                    TabMainPlaceholder.Controls.Add(grid);
                     _currentGrid = grid;
                     _currentGrid.Select();
                 }));
             };
             backgroundLoader.RunWorkerCompleted += (s, arg) => this.Invoke(new Action(() =>
             {
-                _spinnerPanel.Close();
+                SpinnerPanel.Close();
                 this.Activate();
             }));
             backgroundLoader.RunWorkerAsync();
@@ -1229,8 +1229,8 @@ namespace OurStudents
 
         public void HideSecondaryTab()
         {
-            _tabSecondaryPlaceholder.Controls.Clear();
-            _tabControl.Controls.Remove(_tabSecondaryPlaceholder);
+            TabSecondaryPlaceholder.Controls.Clear();
+            TabControl.Controls.Remove(TabSecondaryPlaceholder);
         }
 
         #endregion
@@ -1242,9 +1242,9 @@ namespace OurStudents
             _currentGrid = null;
             SelectButton(sender);
             HideSecondaryTab();
-            _tabMainPlaceholder.Text = "Расписание";
+            TabMainPlaceholder.Text = "Расписание";
 
-            _tabMainPlaceholder.Controls.Clear();
+            TabMainPlaceholder.Controls.Clear();
             SchedulerInit(DateTime.Today);
 
             var lbScheduler = new MetroLabel()
@@ -1403,22 +1403,22 @@ namespace OurStudents
             sunday.Columns.Add("Время", -2, HorizontalAlignment.Left);
             sunday.Items.AddRange(Db.GetScheduler(DateTime.Today.StartOfWeek(DayOfWeek.Monday).AddDays(6)));
 
-            _tabMainPlaceholder.Controls.Add(dtScheduler);
-            _tabMainPlaceholder.Controls.Add(monday);
-            _tabMainPlaceholder.Controls.Add(tuestday);
-            _tabMainPlaceholder.Controls.Add(wednesday);
-            _tabMainPlaceholder.Controls.Add(thursday);
-            _tabMainPlaceholder.Controls.Add(friday);
-            _tabMainPlaceholder.Controls.Add(saturnday);
-            _tabMainPlaceholder.Controls.Add(sunday);
-            _tabMainPlaceholder.Controls.Add(lbmonday);
-            _tabMainPlaceholder.Controls.Add(lbthursday);
-            _tabMainPlaceholder.Controls.Add(lbwednesday);
-            _tabMainPlaceholder.Controls.Add(lbtuestday);
-            _tabMainPlaceholder.Controls.Add(lbfriday);
-            _tabMainPlaceholder.Controls.Add(lbsaturnday);
-            _tabMainPlaceholder.Controls.Add(lbsunday);
-            _tabMainPlaceholder.Controls.Add(lbScheduler);
+            TabMainPlaceholder.Controls.Add(dtScheduler);
+            TabMainPlaceholder.Controls.Add(monday);
+            TabMainPlaceholder.Controls.Add(tuestday);
+            TabMainPlaceholder.Controls.Add(wednesday);
+            TabMainPlaceholder.Controls.Add(thursday);
+            TabMainPlaceholder.Controls.Add(friday);
+            TabMainPlaceholder.Controls.Add(saturnday);
+            TabMainPlaceholder.Controls.Add(sunday);
+            TabMainPlaceholder.Controls.Add(lbmonday);
+            TabMainPlaceholder.Controls.Add(lbthursday);
+            TabMainPlaceholder.Controls.Add(lbwednesday);
+            TabMainPlaceholder.Controls.Add(lbtuestday);
+            TabMainPlaceholder.Controls.Add(lbfriday);
+            TabMainPlaceholder.Controls.Add(lbsaturnday);
+            TabMainPlaceholder.Controls.Add(lbsunday);
+            TabMainPlaceholder.Controls.Add(lbScheduler);
             
         }
 
@@ -1429,29 +1429,29 @@ namespace OurStudents
 
         private void SchedulerInit(DateTime date)
         {
-            if ((_tabMainPlaceholder.Controls["monday"] as ListView) != null)
+            if ((TabMainPlaceholder.Controls["monday"] as ListView) != null)
             {
-                (_tabMainPlaceholder.Controls["monday"] as ListView).Items.Clear();
-                (_tabMainPlaceholder.Controls["tuestday"] as ListView).Items.Clear();
-                (_tabMainPlaceholder.Controls["wednesday"] as ListView).Items.Clear();
-                (_tabMainPlaceholder.Controls["thursday"] as ListView).Items.Clear();
-                (_tabMainPlaceholder.Controls["friday"] as ListView).Items.Clear();
-                (_tabMainPlaceholder.Controls["saturnday"] as ListView).Items.Clear();
-                (_tabMainPlaceholder.Controls["sunday"] as ListView).Items.Clear();
+                (TabMainPlaceholder.Controls["monday"] as ListView).Items.Clear();
+                (TabMainPlaceholder.Controls["tuestday"] as ListView).Items.Clear();
+                (TabMainPlaceholder.Controls["wednesday"] as ListView).Items.Clear();
+                (TabMainPlaceholder.Controls["thursday"] as ListView).Items.Clear();
+                (TabMainPlaceholder.Controls["friday"] as ListView).Items.Clear();
+                (TabMainPlaceholder.Controls["saturnday"] as ListView).Items.Clear();
+                (TabMainPlaceholder.Controls["sunday"] as ListView).Items.Clear();
 
-                (_tabMainPlaceholder.Controls["monday"] as ListView).Items.AddRange(
+                (TabMainPlaceholder.Controls["monday"] as ListView).Items.AddRange(
                     Db.GetScheduler(date.StartOfWeek(DayOfWeek.Monday).AddDays(0)));
-                (_tabMainPlaceholder.Controls["tuestday"] as ListView).Items.AddRange(
+                (TabMainPlaceholder.Controls["tuestday"] as ListView).Items.AddRange(
                     Db.GetScheduler(date.StartOfWeek(DayOfWeek.Monday).AddDays(1)));
-                (_tabMainPlaceholder.Controls["wednesday"] as ListView).Items.AddRange(
+                (TabMainPlaceholder.Controls["wednesday"] as ListView).Items.AddRange(
                     Db.GetScheduler(date.StartOfWeek(DayOfWeek.Monday).AddDays(2)));
-                (_tabMainPlaceholder.Controls["thursday"] as ListView).Items.AddRange(
+                (TabMainPlaceholder.Controls["thursday"] as ListView).Items.AddRange(
                     Db.GetScheduler(date.StartOfWeek(DayOfWeek.Monday).AddDays(3)));
-                (_tabMainPlaceholder.Controls["friday"] as ListView).Items.AddRange(
+                (TabMainPlaceholder.Controls["friday"] as ListView).Items.AddRange(
                     Db.GetScheduler(date.StartOfWeek(DayOfWeek.Monday).AddDays(4)));
-                (_tabMainPlaceholder.Controls["saturnday"] as ListView).Items.AddRange(
+                (TabMainPlaceholder.Controls["saturnday"] as ListView).Items.AddRange(
                     Db.GetScheduler(date.StartOfWeek(DayOfWeek.Monday).AddDays(5)));
-                (_tabMainPlaceholder.Controls["sunday"] as ListView).Items.AddRange(
+                (TabMainPlaceholder.Controls["sunday"] as ListView).Items.AddRange(
                     Db.GetScheduler(date.StartOfWeek(DayOfWeek.Monday).AddDays(6)));
             }
         }
@@ -1471,7 +1471,7 @@ namespace OurStudents
 
         public void SearchInGrid()
         {
-            _searchForm.Grid = (_tabControl.SelectedTab == _tabMainPlaceholder) ? _currentGrid : _secondaryGrid;
+            _searchForm.Grid = (TabControl.SelectedTab == TabMainPlaceholder) ? _currentGrid : _secondaryGrid;
             _searchForm.searchTextBox.Text = String.Empty;
             _searchForm.searchTextBox.Select();
             _searchForm.SetColumnsList();

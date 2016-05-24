@@ -71,11 +71,12 @@ namespace Model
     {
         public string Id { get; set; }
         public string EventName { get; set; }
-        public string MasterName { get; set; }
-        public string Date { get; set; }
-        public string StartTime { get; set; }
-        public string EndTime { get; set; }
+        public string MasterId { get; set; }
+        public string DateString { get; set; }
+        public string StartTimeString { get; set; }
+        public string EndTimeString { get; set; }
         public bool IsActive { get; set; }
+        public decimal Costs { get; set; }
     }
 
     public class PaymentsReportEntity : IEntity

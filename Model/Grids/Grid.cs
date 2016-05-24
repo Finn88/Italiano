@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
@@ -53,9 +54,11 @@ namespace Model.Grids
             ColumnWidthChanged += ColumnSizeChanged;
             ReadOnly = true;
             Style = MetroColorStyle.Green;
-            Font = new Font("Microsoft Sans Serif", 10.0F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(0)));
+            Font = new Font("Microsoft Sans Serif", 10.0F, FontStyle.Regular, GraphicsUnit.Point, 0);
             DataBindingComplete += (sender, args) => SetRowNumber(sender);
             RowHeadersWidth = 60;
+            AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
+            DefaultCellStyle.WrapMode = DataGridViewTriState.True;
         }
 
         private void ColumnSizeChanged(object sender, DataGridViewColumnEventArgs e)
@@ -85,9 +88,9 @@ namespace Model.Grids
             var currColumn = Columns[columnIndex];
             if (Columns[currColumn.Name] != null)
                 Sort(Columns[currColumn.Name],
-                    (((SortOrder == SortOrder.Ascending) || (currColumn != SortedColumn))
+                    (SortOrder == SortOrder.Ascending) || (currColumn != SortedColumn)
                         ? ListSortDirection.Descending
-                        : ListSortDirection.Ascending));
+                        : ListSortDirection.Ascending);
         }
 
         protected abstract void UpdateClick(object sender, EventArgs e, string id);
