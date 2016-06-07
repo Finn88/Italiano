@@ -34,7 +34,7 @@ namespace Model.Grids
             var columns = Db.GetColumnsSettingsList(GridId).OrderBy(c => c.OrderNr);
             foreach (var column in columns)
             {
-                Columns.Add(new CustomColumn
+                Columns.Add(new DataGridViewTextBoxColumn
                 {
                     Name = column.ColumnName,
                     HeaderText = column.ColumnHeader,
@@ -44,109 +44,6 @@ namespace Model.Grids
                     Width = column.Width
                 });
             }
-            /*
-            Columns.Add(new CustomColumn
-            {
-                Name = "Id",
-                HeaderText = "Пин",
-                DataPropertyName = "Id",
-                SortMode = DataGridViewColumnSortMode.Programmatic,
-                Visible = IsColumnVisible(settings, 1, gridId) ?? false
-            });
-
-            Columns.Add(new CustomColumn
-            {
-                Name = "LastName",
-                HeaderText = "Фамилия",
-                Width = 150,
-                DataPropertyName = "LastName",
-                SortMode = DataGridViewColumnSortMode.Programmatic,
-                IsDefaultForSearch = true,
-                Visible = IsColumnVisible(settings, 5, gridId) ?? true
-            });
-
-            Columns.Add(new CustomColumn
-            {
-                Name = "FirstName",
-                HeaderText = "Имя",
-                DataPropertyName = "FirstName",
-                Width = 100,
-                SortMode = DataGridViewColumnSortMode.Programmatic,
-                IsDefaultForSearch = true,
-                Visible = IsColumnVisible(settings, 10, gridId) ?? true
-            });
-
-            Columns.Add(new CustomColumn
-            {
-                Name = "MiddleName",
-                HeaderText = "Отчество",
-                Width = 150,
-                DataPropertyName = "MiddleName",
-                SortMode = DataGridViewColumnSortMode.Programmatic,
-                Visible = IsColumnVisible(settings, 15, gridId) ?? false
-            });
-            Columns.Add(new CustomColumn
-            {
-                Name = "Email",
-                HeaderText = "Email",
-                Width = 100,
-                DataPropertyName = "Email",
-                SortMode = DataGridViewColumnSortMode.Programmatic,
-                Visible = IsColumnVisible(settings, 20, gridId) ?? true
-            });
-            Columns.Add(new CustomColumn
-            {
-                Name = "Phone",
-                HeaderText = "Телефон",
-                Width = 120,
-                DataPropertyName = "Phone",
-                SortMode = DataGridViewColumnSortMode.Programmatic,
-                IsDefaultForSearch = true,
-                Visible = IsColumnVisible(settings, 25, gridId) ?? true
-            });
-            
-            var secondaryText = "Обучается с";
-            if (GridType == PersonType.Teacher)
-                secondaryText = "Работает с";
-
-            if (GridType != PersonType.Contact)
-                Columns.Add(new CustomColumn
-                {
-                    Name = "SecondDate",
-                    HeaderText = secondaryText,
-                    Width = 100,
-                    DataPropertyName = "SecondDate",
-                    SortMode = DataGridViewColumnSortMode.Programmatic
-                });
-
-            if (GridType == PersonType.Teacher)
-            Columns.Add(new CustomColumn
-            {
-                Name = "BirthDate",
-                HeaderText = "Дата рождения",
-                Width = 150,
-                DataPropertyName = "BirthDate",
-                SortMode = DataGridViewColumnSortMode.Programmatic
-            });
-
-            Columns.Add(new CustomColumn
-            {
-                Name = "SexString",
-                HeaderText = "Пол",
-                Width = 100,
-                DataPropertyName = "SexString",
-                SortMode = DataGridViewColumnSortMode.Programmatic
-            });
-            if (GridType == PersonType.Student)
-                Columns.Add(new CustomColumn
-                {
-                    Name = "Group",
-                    HeaderText = "Группа",
-                    Width = 100,
-                    DataPropertyName = "Group",
-                    SortMode = DataGridViewColumnSortMode.Programmatic
-                });
-            */
         }
 
         protected override void AdditionalMenuItems(bool isRowSelected, string id)

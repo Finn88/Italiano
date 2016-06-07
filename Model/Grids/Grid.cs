@@ -15,11 +15,6 @@ using OurStudents;
 
 namespace Model.Grids
 {
-    public class CustomColumn : DataGridViewTextBoxColumn
-    {
-        public bool IsDefaultForSearch { get; set; }
-    }
-
     public abstract class Grid<T> : MetroGrid
         where T : IEntity
     {
@@ -80,8 +75,7 @@ namespace Model.Grids
                 }
             }
         }
-
-
+        
         private void SortEvent(object sender, DataGridViewCellMouseEventArgs e)
         {
             var columnIndex = e.ColumnIndex;

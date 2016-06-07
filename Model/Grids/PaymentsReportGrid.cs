@@ -25,7 +25,7 @@ namespace Model.Grids
 
             foreach (var column in columns)
             {
-                Columns.Add(new CustomColumn
+                Columns.Add(new DataGridViewTextBoxColumn
                 {
                     Name = column.ColumnName,
                     HeaderText = column.ColumnHeader,

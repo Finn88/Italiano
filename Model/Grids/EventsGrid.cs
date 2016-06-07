@@ -33,7 +33,7 @@ namespace Model.Grids
             var columns = Db.GetColumnsSettingsList(gridId).OrderBy(c => c.OrderNr);
             foreach (var column in columns)
             {
-                Columns.Add(new CustomColumn
+                Columns.Add(new DataGridViewTextBoxColumn
                 {
                     Name = column.ColumnName,
                     HeaderText = column.ColumnHeader,
@@ -43,54 +43,6 @@ namespace Model.Grids
                     Width = column.Width
                 });
             }
-            /*Columns.Add(new CustomColumn
-            {
-                Name = "Id",
-                HeaderText = "Id",
-                DataPropertyName = "Id",
-                SortMode = DataGridViewColumnSortMode.Programmatic,
-                Visible = false
-            });
-            Columns.Add(new CustomColumn
-            {
-                Name = "EventName",
-                HeaderText = "Название",
-                DataPropertyName = "EventName",
-                Width = 150,
-                SortMode = DataGridViewColumnSortMode.Programmatic,
-                IsDefaultForSearch = true
-            });
-            Columns.Add(new CustomColumn
-            {
-                Name = "MasterName",
-                HeaderText = "Шеф/Ведущий",
-                DataPropertyName = "MasterName",
-                Width = 200,
-                SortMode = DataGridViewColumnSortMode.Programmatic,
-                IsDefaultForSearch  = true
-            });
-            Columns.Add(new CustomColumn
-            {
-                Name = "Date",
-                HeaderText = "Дата",
-                DataPropertyName = "Date",
-                SortMode = DataGridViewColumnSortMode.Programmatic,
-                IsDefaultForSearch = true
-            });
-            Columns.Add(new CustomColumn
-            {
-                Name = "StartTime",
-                HeaderText = "Начало",
-                DataPropertyName = "StartTime",
-                SortMode = DataGridViewColumnSortMode.Programmatic,
-            });
-            Columns.Add(new CustomColumn
-            {
-                Name = "EndTime",
-                HeaderText = "Конец",
-                DataPropertyName = "EndTime",
-                SortMode = DataGridViewColumnSortMode.Programmatic,
-            });*/
         }
 
 

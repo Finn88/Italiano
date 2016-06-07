@@ -23,7 +23,7 @@ namespace Model.Grids
             var columns = Db.GetColumnsSettingsList(GridId).OrderBy(c => c.OrderNr);
             foreach (var column in columns)
             {
-                Columns.Add(new CustomColumn
+                Columns.Add(new DataGridViewTextBoxColumn
                 {
                     Name = column.ColumnName,
                     HeaderText = column.ColumnHeader,

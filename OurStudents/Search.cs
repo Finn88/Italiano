@@ -70,7 +70,7 @@ namespace OurStudents
             {
                 if (Grid.Columns[j].Visible)
                     selectedColumns.Items.Add(new ColumnItem {Index = j, Name = Grid.Columns[j].HeaderText},
-                                              (Grid.Columns[j] as CustomColumn).IsDefaultForSearch);
+                                              (Grid.Columns[j] as DataGridViewTextBoxColumn).IsDefaultForSearch);
             }
         }
 

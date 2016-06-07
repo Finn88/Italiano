@@ -141,7 +141,7 @@ namespace OurStudents
                     {
                         Name = "pnDates",
                         Width = 500,
-                        Height = 300,
+                        Height = 330,
                         Top = 0,
                         Left = (TabMainPlaceholder.Width / 2) + 50,
                     };
@@ -163,7 +163,6 @@ namespace OurStudents
                                          Width = 150
                                      };
 
-
                     datesPanel.Controls.Add(new MetroLabel
                     {
                         Text = "Период От:",
@@ -172,6 +171,7 @@ namespace OurStudents
                         Width = 100
                     });
                     datesPanel.Controls.Add(dateFrom);
+                    
 
                     datesPanel.Controls.Add(new MetroLabel
                     {
@@ -202,6 +202,18 @@ namespace OurStudents
                                     };
 
                     datesPanel.Controls.Add(total);
+
+                    var export = new MetroButton
+                    {
+                        Top = 140,
+                        Width = 200,
+                        Height = 30,
+                        Left = 30,
+                        Text = "Сгенерировать отчет"
+                    };
+                    export.Click += (send, args) => { ExportToExel(dateFrom.Value, dateTo.Value); };
+
+                    datesPanel.Controls.Add(export);
 
                     dateTo.ValueChanged += (send, args) =>
                                                {
@@ -505,25 +517,6 @@ namespace OurStudents
 
         private void StudentsMenuClick(object sender, EventArgs e)
         {
-
-            var duplicateKeys = Db.Persons.GroupBy(x => x.Id)
-              .Where(group => group.Count() > 1)
-              .Select(group => group.Key).ToList();
-            var duplicateKeys2 = Db.Payments.GroupBy(x => x.Id)
-                .Where(group => group.Count() > 1)
-                .Select(group => group.Key).ToList();
-            var duplicateKeys3 = Db.Groups.GroupBy(x => x.Id)
-                .Where(group => group.Count() > 1)
-                .Select(group => group.Key).ToList();
-            var duplicateKeys4 = Db.Events.GroupBy(x => x.Id)
-                .Where(group => group.Count() > 1)
-                .Select(group => group.Key).ToList();
-            var ddd = Guid.NewGuid().ToString();
-            var z = duplicateKeys;
-            var z2 = duplicateKeys2;
-            var z3 = duplicateKeys3;
-            var z4 = duplicateKeys4;
-            var tt = ddd;
             _secondaryGrid = new PaymentsGrid(Db)
                                  {
                                      IsDetailsGrid = true,
@@ -1476,6 +1469,103 @@ namespace OurStudents
             _searchForm.searchTextBox.Select();
             _searchForm.SetColumnsList();
             _searchForm.ShowDialog();
+        }
+
+        #endregion
+
+        #region ExportToExel
+
+        public void ExportToExel(DateTime dateFrom, DateTime dateTo)
+        {
+            var saveFileDialog = new SaveFileDialog
+                                 {
+                                     Filter = "xml files (*.xlsx)|*.xlsx",
+                                     FilterIndex = 1,
+                                     RestoreDirectory = true
+                                 };
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                var backgroundLoader = new BackgroundWorker();
+                backgroundLoader.DoWork += (s, arg) =>
+                                           {
+                                               Invoke((MethodInvoker) (() =>
+                                                                       {
+                                                                           SpinnerPanel = new LoadingPanel();
+                                                                           SpinnerPanel.UpdateLoadingText(
+                                                                               "Отчет генерируется...");
+                                                                           SpinnerPanel.Show();
+                                                                       }));
+
+                                               var excel = new Microsoft.Office.Interop.Excel.Application();
+                                               excel.Workbooks.Add();
+                                               var workSheet = excel.ActiveSheet;
+                                               try
+                                               {
+                                                   workSheet.Cells[1, 1] = "Отчетный период:";
+                                                   workSheet.Cells[1, 2] =
+                                                       (_paymentsGrid.DateFrom ?? DateTime.Today).ToString("yyyy/MM/dd");
+                                                   workSheet.Cells[1, 3] =
+                                                       (_paymentsGrid.DateTo ?? DateTime.Today).ToString("yyyy/MM/dd");
+
+                                                   var indexColumn = 1;
+                                                   foreach (DataGridViewColumn column in _paymentsGrid.Columns)
+                                                   {
+                                                       if (column.Visible)
+                                                       {
+                                                           workSheet.Cells[2, indexColumn] = column.HeaderText;
+                                                           indexColumn++;
+                                                       }
+                                                   }
+
+                                                   var indexRow = 3;
+                                                   foreach (DataGridViewRow row in _paymentsGrid.Rows)
+                                                   {
+                                                       indexColumn = 1;
+                                                       foreach (DataGridViewCell cell in row.Cells)
+                                                       {
+                                                           if (cell.Visible)
+                                                           {
+                                                               workSheet.Cells[indexRow, indexColumn] = cell.Value;
+                                                               indexColumn++;
+                                                           }
+                                                       }
+                                                       indexRow++;
+                                                   }
+
+                                                   workSheet.Cells[indexRow, indexColumn - 2] = "Итого:";
+                                                   workSheet.Cells[indexRow, indexColumn - 1] = _paymentsGrid.Total;
+
+                                                   workSheet.Range["A1"].AutoFormat(
+                                                       Microsoft.Office.Interop.Excel.XlRangeAutoFormat
+                                                           .xlRangeAutoFormatClassic1);
+
+                                                   workSheet.SaveAs(saveFileDialog.FileName);
+                                               }
+                                               catch (Exception exception)
+                                               {
+                                                   MessageBox.Show(
+                                                       "Произошла ошибка при записи Excel файла! " + exception.Message,
+                                                       "Внимание",
+                                                       MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                               }
+                                               finally
+                                               {
+                                                   excel.Quit();
+                                                   System.Runtime.InteropServices.Marshal.ReleaseComObject(excel);
+                                                   if (workSheet != null)
+                                                       System.Runtime.InteropServices.Marshal.ReleaseComObject(workSheet);
+                                                   excel = null;
+                                                   workSheet = null;
+                                                   GC.Collect();
+                                               }
+                                           };
+                backgroundLoader.RunWorkerCompleted += (s, arg) => Invoke(new Action(() =>
+                                                                                     {
+                                                                                         SpinnerPanel.Close();
+                                                                                         MessageBox.Show("Операция завершена.");
+                                                                                     }));
+                backgroundLoader.RunWorkerAsync();
+            }
         }
 
         #endregion
