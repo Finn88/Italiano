@@ -1479,7 +1479,7 @@ namespace OurStudents
         {
             var saveFileDialog = new SaveFileDialog
                                  {
-                                     Filter = "xml files (*.xlsx)|*.xlsx",
+                                     Filter = "excel files (*.xls)|*.xls",
                                      FilterIndex = 1,
                                      RestoreDirectory = true
                                  };
